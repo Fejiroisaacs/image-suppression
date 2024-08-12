@@ -1,0 +1,13 @@
+\textbf{Dataset},\textbf{Data subset},\textbf{Total (items)},\textbf{Avg Word Length}
+Jigsaw Kaggle (cjadams et al. 2017),-,445293,60.67
+Jigsaw Bias (Dixon et al. 2018),-,60560,5.01
+Stormfront (De Gibert et al. 2018),-,10944,17.96
+TweetEval (Barbieri et al. 2020),Hate,12962,21.23
+TweetEval (Barbieri et al. 2020),Offensive,14100,22.25
+OpenAI (Markov et al. 2023),-,1680,111.02
+Movie Plots,-,6001,611.57
+TV Synopses,Long IMDB,1843,867.27
+TV Synopses,Medium Wiki,6603,94.17
+TV Synopses,Short TMDB,14760,44.03
+GenAI,-,30887,217.78
+Traditional,-,543859,51.67

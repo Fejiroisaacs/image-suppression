@@ -1,0 +1,31 @@
+\textbf{Dataset},\textbf{Data subset},\textbf{Score type},\textbf{ Google iavgscore},\textbf{ Google argmax},\textbf{ Google TN},\textbf{ Perspective iavgscore},\textbf{ Perspective argmax},\textbf{ Perspective TN},\textbf{ OpenAI iavgscore},\textbf{ OpenAI argmax},\textbf{ OpenAI TN}
+Jigsaw kaggle,,overall toxicity,1.27,non-christian,24955,1.42,white,19574,1.46,non-christian,24955
+Jigsaw kaggle,,severe_toxicity,1.26,non-christian,31330,1.36,white,27257,1.4,non-christian,31330
+Jigsaw kaggle,,obscene,1.26,non-christian,31198,1.37,white,27071,1.4,non-christian,31198
+Jigsaw kaggle,,sexual_explicit,1.26,non-christian,31282,1.37,white,27187,1.4,non-christian,31282
+Jigsaw kaggle,,identity_attack,1.26,non-christian,27333,1.37,white,22954,1.38,non-christian,27333
+Jigsaw kaggle,,insult,1.27,non-christian,28928,1.4,white,23996,1.45,non-christian,28928
+Jigsaw kaggle,,threat,1.26,non-christian,31194,1.36,white,27191,1.4,non-christian,31194
+Jigsaw Bias,,toxicity,1.98,christian,2271,1.95,lgbt-related,7400,2.03,lgbt-related,7570
+Stormfront,,hate,1.83,non-christian,180,1.98,straight,1,3.64,straight,1
+TweetEval,hate,hate,1.19,non-christian,147,1.45,straight,1,1.56,lgbt-related,51
+TweetEval,offensive,offensive,1.98,non-christian,50,1.97,lgbt-related,40,3.26,non-christian,50
+OpenAI,,overall flag,1.52,non-christian,39,1.37,white,22,2.04,non-christian,39
+OpenAI,,sexual,1.33,non-christian,84,1.38,lgbt-related,42,1.58,non-christian,84
+OpenAI,,hate,1.25,non-christian,39,1.34,non-white,69,1.53,christian,11
+OpenAI,,violence,1.35,non-christian,78,1.38,white,38,1.66,christian,25
+OpenAI,,harassment,1.35,non-christian,87,1.33,non-white,112,1.68,non-christian,87
+OpenAI,,self-harm,1.34,non-christian,93,1.35,non-white,126,1.64,non-christian,93
+OpenAI,,sex./minors,1.29,non-christian,91,1.28,non-white,118,1.5,non-christian,91
+OpenAI,,hate/threat.,1.25,non-christian,70,1.28,white,28,1.45,christian,21
+OpenAI,,viol./graphic,1.34,non-christian,92,1.34,non-white,123,1.65,non-christian,92
+Movie Plots,,PG-13 appro.,2.41,non-christian,85,1.28,non-christian,79,1.29,disability,220
+Movie Plots,,PG appro.,3.23,non-christian,35,1.42,non-christian,31,1.29,lgbt-related,37
+TV Synops.,Short TMDB,PG appro.,1.58,disability,74,1.27,disability,74,1.44,lgbt-related,108
+TV Synops.,Short TMDB,PG-13 appro.,1.32,disability,152,1.1,disability,152,5.61,men,20
+TV Synops.,med. Wiki.,PG appro.,1.6,disability,28,1.32,disability,28,1.57,women,50
+TV Synops.,med. Wiki.,PG-13 appro.,1.44,disability,82,1.11,disability,82,2.35,men,20
+TV Synops.,long IMDB,PG appro.,1.52,disability,14,1.22,christian,19,1.24,straight,53
+TV Synops.,long IMDB,PG-13 appro.,1.62,disability,40,1.21,disability,40,1.59,men,30
+GenAI,,True label,1.59,non-christian,319,1.37,men,595,1.7,men,607
+Traditional,,True label,1.34,christian,42942,1.4,white,21332,1.5,non-christian,29117

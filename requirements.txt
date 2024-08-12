@@ -1,0 +1,17 @@
+pandas
+numpy
+matplotlib
+wikipedia
+tmdbsimple
+pymarc
+openai
+tmdbsimple
+lxml
+html5lib
+wikipedia-api
+scikit-learn
+google-api-python-client
+anthropic
+dataframe_to_image
+Jinja2
+IPython

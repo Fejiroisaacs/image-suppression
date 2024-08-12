@@ -1,0 +1,31 @@
+\textbf{Dataset},\textbf{Data subset},\textbf{Score type},\textbf{ Google imedianscore},\textbf{ Google argmax},\textbf{ Google TN},\textbf{ Perspective imedianscore},\textbf{ Perspective argmax},\textbf{ Perspective TN},\textbf{ OpenAI imedianscore},\textbf{ OpenAI argmax},\textbf{ OpenAI TN}
+Jigsaw kaggle,,overall toxicity,1.16,buddhist,558,1.54,black,11184,3.29,muslim,17605
+Jigsaw kaggle,,severe_toxicity,1.19,other_religion,351,1.43,black,16299,2.62,muslim,22819
+Jigsaw kaggle,,obscene,1.19,other_religion,350,1.42,white,27071,2.64,muslim,22729
+Jigsaw kaggle,,sexual_explicit,1.19,other_religion,350,1.43,black,16253,2.64,muslim,22781
+Jigsaw kaggle,,identity_attack,1.15,muslim,19395,1.41,black,12898,2.73,muslim,19395
+Jigsaw kaggle,,insult,1.16,buddhist,607,1.47,black,14448,3.0,muslim,20936
+Jigsaw kaggle,,threat,1.19,other_religion,351,1.43,black,16240,2.63,muslim,22714
+Jigsaw Bias,,toxicity,2.19,muslim,757,5.02,gay,733,12.94,homosexual,757
+Stormfront,,hate,1.86,jewish,142,3.19,chinese,3,19.55,straight,1
+TweetEval,hate,hate,1.15,chinese,2,1.53,lgbt-related,18,2.39,african american,6
+TweetEval,offensive,offensive,2.18,muslim,40,4.18,homosexual,1,68.28,homosexual,1
+OpenAI,,overall flag,1.49,muslim,25,3.1,native american,1,15.73,poc,4
+OpenAI,,sexual,1.2,lesbian,2,2.93,african,1,3.89,sikh,2
+OpenAI,,hate,1.25,muslim,27,2.03,african american,2,1.85,african american,2
+OpenAI,,violence,1.28,protestant,1,3.25,african,1,2.8,protestant,1
+OpenAI,,harassment,1.27,protestant,1,2.37,african american,8,5.1,homosexual,4
+OpenAI,,self-harm,1.27,protestant,1,2.89,african,1,2.62,protestant,1
+OpenAI,,sex./minors,1.24,muslim,60,2.55,african,1,3.12,sikh,2
+OpenAI,,hate/threat.,1.23,muslim,42,2.44,african,1,1.3,white,18
+OpenAI,,viol./graphic,1.27,protestant,1,2.89,african,1,2.5,protestant,1
+Movie Plots,,PG-13 appro.,11.07,jewish,39,1.48,other-non-christian,79,1.98,trans-nonbinary,16
+Movie Plots,,PG appro.,17.85,jewish,15,2.71,bisexual,1,3.57,lesbian,12
+TV Synops.,Short TMDB,PG appro.,6.93,trans,2,2.59,muslim,1,7.82,trans,2
+TV Synops.,Short TMDB,PG-13 appro.,4.69,muslim,8,2.46,mental,16,1.52,mental,16
+TV Synops.,med. Wiki.,PG appro.,18.77,trans,1,4.59,trans,1,16.47,trans,1
+TV Synops.,med. Wiki.,PG-13 appro.,11.33,bisexual,2,2.27,bisexual,2,6.5,men,20
+TV Synops.,long IMDB,PG appro.,10.41,asian,1,2.99,asian,1,2.18,gay,11
+TV Synops.,long IMDB,PG-13 appro.,11.4,bisexual,1,2.92,asian,1,4.67,mental,4
+GenAI,,True label,9.52,middle eastern,10,5.21,native american,1,22.09,poc,4
+Traditional,,True label,1.26,buddhist,1315,3.32,lgbt-related,51,10.26,lgbt-related,51

@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+test.py
+test2.py
+hate/
+offensive/
+ME_with_Dixon.ipynb
+.venv
+nohup.out
+Data/Dixon/Data_with_ME.csv
+all_data.csv
+gpt_tv_database.csv
+all_files
+annotations_metadata.csv
+Data/CJadams/
+Data/Combined/
+Data/all_combined_forstats.csv

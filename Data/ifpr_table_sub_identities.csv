@@ -1,0 +1,31 @@
+\textbf{Dataset},\textbf{Data subset},\textbf{Score type},\textbf{ OpenAI ifprscore},\textbf{ OpenAI argmax},\textbf{ OpenAI FP},\textbf{ Llama Guard ifprscore},\textbf{ Llama Guard argmax},\textbf{ Llama Guard FP},\textbf{ Anthropic ifprscore},\textbf{ Anthropic argmax},\textbf{ Anthropic FP}
+Jigsaw kaggle,,overall toxicity,2.62,muslim,10074,2.65,muslim,8832,2.1,muslim,11978
+Jigsaw kaggle,,severe_toxicity,2.32,muslim,14560,2.5,muslim,12737,1.99,muslim,16533
+Jigsaw kaggle,,obscene,2.33,muslim,14480,2.51,muslim,12666,2.0,muslim,16454
+Jigsaw kaggle,,sexual_explicit,2.33,muslim,14532,2.52,muslim,12707,2.0,muslim,16498
+Jigsaw kaggle,,identity_attack,2.3,muslim,11599,2.48,muslim,9942,1.98,muslim,13423
+Jigsaw kaggle,,insult,2.56,muslim,12873,2.6,muslim,11410,2.06,muslim,14949
+Jigsaw kaggle,,threat,2.32,muslim,14463,2.51,muslim,12642,1.99,muslim,16429
+Jigsaw Bias,,toxicity,25.52,homosexual,56,2.74,mexican,584,10.3,white,495
+Stormfront,,hate,8.26,other,1,3.31,sikh,1,3.08,poc,4
+TweetEval,hate,hate,3.16,african american,6,2.4,african american,6,1.74,lgbt-related,18
+TweetEval,offensive,offensive,7.5,homosexual,1,4.3,lesbian,2,2.8,lesbian,2
+OpenAI,,overall flag,7.15,poc,4,3.86,muslim,16,3.23,protestant,2
+OpenAI,,sexual,2.13,sikh,2,2.14,sikh,2,1.59,sikh,2
+OpenAI,,hate,1.98,african american,2,1.93,african american,2,1.46,african american,2
+OpenAI,,violence,3.09,african american,6,2.89,african american,6,2.15,african american,6
+OpenAI,,harassment,3.09,african american,8,2.82,african american,8,2.13,african american,8
+OpenAI,,self-harm,3.0,african american,11,2.78,african american,11,2.07,african american,11
+OpenAI,,sex./minors,1.92,sikh,2,1.85,sikh,2,1.45,sikh,2
+OpenAI,,hate/threat.,1.72,african american,7,1.69,african american,7,1.35,african american,7
+OpenAI,,viol./graphic,2.85,african american,11,2.67,african american,11,2.04,african american,11
+Movie Plots,,PG-13 appro.,4.21,trans-nonbinary,5,11.95,physical-disability,2,2.02,latinx,9
+Movie Plots,,PG appro.,9.44,lesbian,4,21.64,physical-disability,1,3.53,islam,1
+TV Synops.,Short TMDB,PG appro.,16.6,straight,1,2.15,mental,2,7.68,mental,4
+TV Synops.,Short TMDB,PG-13 appro.,53.57,men,3,3.02,bisexual,2,5.31,mental,6
+TV Synops.,med. Wiki.,PG appro.,6.06,women,1,1.29,latinx,4,23.92,trans,1
+TV Synops.,med. Wiki.,PG-13 appro.,31.15,mental,2,5.26,muslim,2,6.16,bisexual,1
+TV Synops.,long IMDB,PG appro.,4.81,christian,2,2.7,jewish,1,4.66,lesbian,1
+TV Synops.,long IMDB,PG-13 appro.,7.39,mental,2,4.07,mental-disability,1,3.88,mental,2
+GenAI,,True label,40.32,poc,4,7.98,latino,3,11.27,protestant,2
+Traditional,,True label,3.79,lgbt-related,39,4.07,lgbt-related,42,2.96,lgbt-related,47

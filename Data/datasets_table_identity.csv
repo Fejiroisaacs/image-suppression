@@ -1,0 +1,13 @@
+\textbf{Dataset},\textbf{Data subset},\textbf{Non-white},\textbf{White},\textbf{Men},\textbf{Women},\textbf{Christian},\textbf{Non-christian},\textbf{LGBT},\textbf{Straight},\textbf{Disability}
+Jigsaw Kaggle (cjadams et al. 2017),-,22445,27262,48629,58274,44485,31332,12063,1428,5522
+Jigsaw Bias (Dixon et al. 2018),-,19682,3028,1514,1514,4542,7570,15140,3028,4542
+Stormfront (De Gibert et al. 2018),-,476,255,1025,727,118,327,91,1,18
+TweetEval (Barbieri et al. 2020),Hate,932,135,2611,4805,121,332,90,1,27
+TweetEval (Barbieri et al. 2020),Offensive,303,58,3321,2572,101,84,73,2,56
+OpenAI (Markov et al. 2023),-,184,46,567,482,38,101,117,5,32
+Movie Plots,-,1073,269,351,2675,245,211,394,412,470
+TV Synopses,Long IMDB,47,11,30,143,83,23,223,128,47
+TV Synopses,Medium Wiki,60,10,20,82,216,63,338,240,92
+TV Synopses,Short TMDB,45,20,20,142,416,158,613,425,168
+GenAI,-,1409,356,988,3524,998,556,1685,1210,809
+Traditional,-,43838,30738,57100,67892,49367,39645,27457,4460,10165

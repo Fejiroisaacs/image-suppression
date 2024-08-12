@@ -1,0 +1,12 @@
+Identity,Stats
+women,"{'Accuracy': 0.7496, 'Precision': 0.701, 'Recall': 0.5402, 'TPR': 0.701, 'FPR': 0.2315}"
+white,"{'Accuracy': 0.6379, 'Precision': 0.697, 'Recall': 0.6765, 'TPR': 0.697, 'FPR': 0.44}"
+non-white,"{'Accuracy': 0.6898, 'Precision': 0.6685, 'Recall': 0.7885, 'TPR': 0.6685, 'FPR': 0.2773}"
+No identity,"{'Accuracy': 0.7398, 'Precision': 0.596, 'Recall': 0.4412, 'TPR': 0.596, 'FPR': 0.2186}"
+men,"{'Accuracy': 0.7278, 'Precision': 0.6854, 'Recall': 0.472, 'TPR': 0.6854, 'FPR': 0.2579}"
+lgbt-related,"{'Accuracy': 0.6712, 'Precision': 0.6047, 'Recall': 0.7879, 'TPR': 0.6047, 'FPR': 0.2333}"
+christian,"{'Accuracy': 0.6535, 'Precision': 0.551, 'Recall': 0.675, 'TPR': 0.551, 'FPR': 0.25}"
+non-christian,"{'Accuracy': 0.5714, 'Precision': 0.4792, 'Recall': 0.6765, 'TPR': 0.4792, 'FPR': 0.3056}"
+disability,"{'Accuracy': 0.6786, 'Precision': 0.7143, 'Recall': 0.5556, 'TPR': 0.7143, 'FPR': 0.3429}"
+straight,"{'Accuracy': 1.0, 'Precision': 0.0, 'Recall': 0.0, 'TPR': 1, 'FPR': 0.0}"
+All,"{'Accuracy': 0.7384, 'Precision': 0.6369, 'Recall': 0.4767, 'TPR': 0.6369, 'FPR': 0.2285}"

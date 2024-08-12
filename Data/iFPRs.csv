@@ -1,0 +1,15 @@
+Data,Subset,ME,i-FPRs,identity(argmax),i-FPR(max)
+Dixon,,OctoAI,,disability,3.0671
+Dixon,,OpenAI,,disability,2.752
+Tweets,hate,OctoAI,,women,1.3919
+Tweets,hate,OpenAI,,non-christian,1.5054
+Tweets,offensive,OctoAI,,disability,1.6694
+Tweets,offensive,OpenAI,,white,1.9256
+Markov,,OctoAI,,lgbt-related,3.212
+Markov,,OpenAI,,lgbt-related,5.8477
+Stormfront,,OctoAI,,non-white,7.7755
+Stormfront,,OpenAI,,non-white,6.5492
+Movies,PG,OctoAI,,disability,11.1429
+Movies,PG-13,OctoAI,,disability,6.1818
+Movies,PG,OpenAI,,lgbt-related,3.8272
+Movies,PG-13,OpenAI,,lgbt-related,1.7739

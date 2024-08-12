@@ -1,0 +1,31 @@
+\textbf{Dataset},\textbf{Data subset},\textbf{Score type},\textbf{ Llama Guard ifprscore},\textbf{ Llama Guard argmax},\textbf{ Llama Guard FP},\textbf{ Anthropic ifprscore},\textbf{ Anthropic argmax},\textbf{ Anthropic FP},\textbf{ OpenAI ifprscore},\textbf{ OpenAI argmax},\textbf{ OpenAI FP}
+Jigsaw kaggle,,overall toxicity,2.53,white,9357,1.96,white,12407,2.32,non-christian,12663
+Jigsaw kaggle,,severe_toxicity,2.41,white,14693,1.91,white,18938,2.1,lgbt-related,6983
+Jigsaw kaggle,,obscene,2.43,white,14569,1.91,white,18775,2.12,lgbt-related,6936
+Jigsaw kaggle,,sexual_explicit,2.43,white,14637,1.92,white,18870,2.1,non-christian,18000
+Jigsaw kaggle,,identity_attack,2.4,white,11414,1.89,white,15178,2.06,non-christian,14635
+Jigsaw kaggle,,insult,2.5,white,12599,1.95,white,16232,2.29,non-christian,15915
+Jigsaw kaggle,,threat,2.43,white,14633,1.91,white,18873,2.11,lgbt-related,6947
+Jigsaw Bias,,toxicity,1.75,non-white,4859,5.15,white,495,3.59,lgbt-related,79
+Stormfront,,hate,3.31,straight,1,3.08,straight,1,8.26,straight,1
+TweetEval,hate,hate,2.4,straight,1,1.74,straight,1,3.16,straight,1
+TweetEval,offensive,offensive,3.27,non-christian,38,2.02,non-white,106,3.75,non-christian,25
+OpenAI,,overall flag,2.84,lgbt-related,16,2.57,non-christian,31,4.22,non-christian,23
+OpenAI,,sexual,1.68,non-christian,66,1.45,non-christian,77,1.83,non-christian,72
+OpenAI,,hate,1.51,lgbt-related,39,1.33,christian,10,1.62,non-white,58
+OpenAI,,violence,2.13,lgbt-related,54,1.96,non-christian,71,2.47,christian,20
+OpenAI,,harassment,2.17,non-christian,67,1.94,non-christian,79,2.41,non-christian,68
+OpenAI,,self-harm,2.12,non-christian,71,1.9,non-christian,85,2.38,non-christian,74
+OpenAI,,sex./minors,1.49,lgbt-related,67,1.33,non-christian,84,1.54,non-white,97
+OpenAI,,hate/threat.,1.36,lgbt-related,54,1.29,christian,20,1.49,non-white,82
+OpenAI,,viol./graphic,2.04,non-christian,70,1.88,non-christian,85,2.3,christian,21
+Movie Plots,,PG-13 appro.,6.18,disability,3,1.74,non-christian,11,1.77,lgbt-related,17
+Movie Plots,,PG appro.,11.14,disability,1,2.42,non-christian,2,3.83,lgbt-related,5
+TV Synops.,Short TMDB,PG appro.,1.56,non-christian,10,3.27,disability,14,16.6,straight,1
+TV Synops.,Short TMDB,PG-13 appro.,1.65,non-christian,20,1.86,disability,20,53.57,men,3
+TV Synops.,med. Wiki.,PG appro.,1.08,straight,6,2.32,lgbt-related,3,6.06,women,1
+TV Synops.,med. Wiki.,PG-13 appro.,1.2,straight,13,1.85,men,3,9.35,men,2
+TV Synops.,long IMDB,PG appro.,2.7,non-christian,1,1.96,christian,2,4.81,christian,2
+TV Synops.,long IMDB,PG-13 appro.,1.83,disability,3,1.55,men,6,2.33,christian,9
+GenAI,,True label,1.79,non-christian,43,3.1,men,167,6.44,men,97
+Traditional,,True label,2.33,white,10061,1.97,white,13120,2.19,non-christian,12880
