@@ -82,9 +82,12 @@ def me_caller(text, sleep_time=1, retry=5):
         time.sleep(sleep_time)
         return me_caller(text, sleep_time=sleep_time+1, retry=retry-1) if retry > 0 else f"API error: {e}"
     if "choices" not in response.keys():
-        time.sleep(sleep_time)
-        print(response)
-        return me_caller(text, sleep_time=sleep_time+1, retry=retry-1) if retry > 0 else f"API error: {e}"
+        if 'The prompt is too long for the current engine configuration' in str(response):
+            return me_caller(text, sleep_time=sleep_time+1, retry=retry-1) if retry > 0 else f"API error: The prompt is too long for the current engine configuration"
+        else:
+            time.sleep(sleep_time)
+            print(response)
+            return me_caller(text, sleep_time=sleep_time+1, retry=retry-1) if retry > 0 else f"API error: {response}"
         
     return response
 
@@ -104,7 +107,10 @@ def run_OctoAI_ME(text_list):
     for text in text_list:
         response = me_caller(text)
         responses.append(response)
-        parsed_response.append(0) if response['choices'][0]['text'] == 'safe' else parsed_response.append(1)
+        if 'API error' not in response:
+            parsed_response.append(0) if response['choices'][0]['text'] == 'safe' else parsed_response.append(1)
+        else:
+            parsed_response.append(None)
         
     return responses, parsed_response, [(date.today(), MODEL_NAME)]*len(responses)
 
