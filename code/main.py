@@ -7,7 +7,7 @@ from sklearn.metrics import precision_score, recall_score, accuracy_score, confu
 from Movies.movie_tagger import titles_recursively
 import statistics
 import matplotlib.patches as mpatches
-plt.rcParams.update({'font.size': 48})
+from scipy.stats import bootstrap
 
 
 def add_identity_cols_combined_data():
@@ -55,108 +55,6 @@ def add_has_slurs():
         data['has_slur'] = has_slurs
         
         data.to_csv(file, index=False)
-                 
-            
-def identity_imeans(dataset_path:str, label_cols:list, dataset_name:str, score_types:list, data_subset:str='', other_table=False) -> dict:
-    if len(score_types) != len(label_cols):
-        print("Score and labels lists don't match")
-        return
-    
-    ME_info = {'Google': 'Google_ME_responses', 'Perspective': 'perspective_ME_responses', 'OpenAI': 'OpenAI_normalized'}
-    return_dict = {}
-    
-    for label_col, score_type in zip(label_cols, score_types):
-        full_data = pd.read_csv(dataset_path)
-        
-        # dixon toxic column not binary
-        if "Dixon" in dataset_path:
-            full_data[label_col] = full_data[label_col].apply(lambda x: 0 if x == 'nontoxic' else 1)
-        full_data = full_data[full_data[label_col] == 0]
-
-        max_imeans_dict = {}
-        return_dict[label_col] = {}
-        for ME, me_score_col in zip(ME_info.keys(), ME_info.values()):
-            print(ME)
-            data = full_data.copy()
-            # getting scores
-            if 'perspective' in me_score_col:
-                data[me_score_col] = data[me_score_col].apply(lambda x: {"Toxic": ast.literal_eval(x)\
-                    ["attributeScores"]["TOXICITY"]["spanScores"][0]["score"]["value"]}\
-                        if "API error" not in x and "languageNotSupportedByAttributeError" not in x else {})
-                data.drop(data[data[me_score_col] == {}].index, inplace=True)
-            else:
-                data[me_score_col] = data[me_score_col].apply(lambda x: ast.literal_eval(x)\
-                    if "API error" not in x else {})
-                data.drop(data[data[me_score_col] == {}].index, inplace=True)
-            
-            # converting dict of scores to max values
-            me_scores = data[me_score_col].apply(lambda x: max(x.values())).tolist()
-            overall_avg_dict = {'score': 0, 'count': 0}
-            data_identities = data['Big_identity'].tolist()
-            categories = get_movies_categories('big')
-            identities_dict = {identity.lower() : {'score' : 0, 'count' : 0} for category in categories for identity in categories[category]}
-            
-            for identities, score in zip(data_identities, me_scores):
-                if type(identities) == float:
-                    continue
-                identities = identities.lower().split(';')
-                for identity in identities:
-                    identities_dict[identity]['score'] += score
-                    identities_dict[identity]['count'] += 1
-                overall_avg_dict['count'] += 1
-                overall_avg_dict['score'] += score
-
-            overall_avg = overall_avg_dict['score']/overall_avg_dict['count']
-            identities_dict = {identity: [round((identities_dict[identity]['score']/identities_dict[identity]['count'])/overall_avg, 2) \
-                if identities_dict[identity]['count'] > 0 else 0, identities_dict[identity]['count']] for identity in identities_dict}
-            
-            max_imeans_dict[ME] = get_max_score(identities_dict)
-            return_dict[label_col][ME] = identities_dict
-            
-        if not other_table:
-            row = {r"\textbf{Dataset}": dataset_name,
-                    r"\textbf{Data subset}": data_subset,
-                    r"\textbf{Score type}": score_type
-                    }
-            
-            for ME, iavg_data in zip(max_imeans_dict.keys(), max_imeans_dict.values()):
-                row.update({
-                    r'\textbf{ ' + ME + ' iavgscore}' : iavg_data[1],
-                    r'\textbf{ ' + ME + ' argmax}' : iavg_data[0],
-                    r'\textbf{ ' + ME + ' TN}' : iavg_data[2],
-                })
-            try:
-                table = pd.read_csv("./Data/iavg_table.csv")
-                table = pd.concat([table, pd.DataFrame(row, index=[0])])
-            except Exception as e:
-                table = pd.DataFrame(row, index=[0])
-            
-            table.drop_duplicates(inplace=True, subset=[r"\textbf{Dataset}", r'\textbf{Data subset}', r"\textbf{Score type}"], keep="last")
-            table.to_csv("./Data/iavg_table.csv", index=False)
-            
-    
-    if other_table:
-        df_dict = {}
-        for label in return_dict:
-            for ME in return_dict[label]:
-                for identity in return_dict[label][ME]:
-                    if identity not in df_dict:
-                        df_dict[identity] = {r'\textbf{Identity group}' : identity}
-                    df_dict[identity].update({
-                        r'\textbf{ ' + ME + ' iavgscore}' : return_dict[label][ME][identity][0],
-                        r'\textbf{ ' +  ME + ' TN}' : return_dict[label][ME][identity][1],
-                    })
-
-        try:
-            table = pd.read_csv(f"Data/{dataset_name}.csv")
-            table = pd.merge(table, pd.DataFrame(list(df_dict.values())), on=[r'\textbf{Identity group}'])
-
-        except Exception as e:
-            table = pd.DataFrame(df_dict.values())
-        
-        table.to_csv(f'Data/{dataset_name}.csv', index=False)
-    
-    return return_dict
 
 
 def get_max_score(score_dict):
@@ -211,16 +109,17 @@ def identity_imedians(dataset_path:str, label_cols:list, dataset_name:str, score
                 data.drop(data[data[me_score_col] == {}].index, inplace=True)
             
             # converting dict of scores to max values
-            me_scores = data[me_score_col].apply(lambda x: max(x.values())).tolist()
+            data[me_score_col] = data[me_score_col].apply(lambda x: max(x.values())).tolist()
             overall_median_dict = {'scores': [], 'count': 0}
             if identity_type == 'big':
-                data_identities = data['Big_identity'].tolist()
+                id_col = 'Big_identity'
                 identities_dict = {identity.lower() : {'scores' : [], 'count' : 0} for category in categories for identity in categories[category]}
             else:
-                data_identities = data['Sub_Identities'].tolist()
+                id_col = 'Sub_Identities'
                 identities_dict = {}
+            data_identities = data[id_col].tolist()
 
-            for identities, score in zip(data_identities, me_scores):
+            for identities, score in zip(data_identities, data[me_score_col]):
                 if type(identities) == float:
                     continue
                 identities = identities.lower().split(';')
@@ -234,8 +133,10 @@ def identity_imedians(dataset_path:str, label_cols:list, dataset_name:str, score
 
             overall_median = statistics.median(overall_median_dict['scores'])
             identities_dict = {identity: [round(statistics.median(identities_dict[identity]['scores'])/ overall_median if identities_dict[identity]['count'] > 0 else 0, 2),\
-                identities_dict[identity]['count'], np.std(identities_dict[identity]['scores'])] for identity in identities_dict}
-            
+                identities_dict[identity]['count']] for identity in identities_dict}
+            bootstrap_data = bootstrap_imedians(data, id_col, me_score_col)
+            for bootstrap_identity in bootstrap_data:
+                identities_dict[bootstrap_identity].append(bootstrap_data[bootstrap_identity])
             max_imedians_dict[ME] = get_max_score(identities_dict)
             return_dict[label_col][ME] = identities_dict
             
@@ -271,7 +172,7 @@ def identity_imedians(dataset_path:str, label_cols:list, dataset_name:str, score
                     df_dict[identity].update({
                         r'\textbf{ ' + ME + ' imedianscore}' : return_dict[label][ME][identity][0],
                         r'\textbf{ ' +  ME + ' TN}' : return_dict[label][ME][identity][1],
-                        r'\textbf{ ' + ME + ' std}' : return_dict[label][ME][identity][2],
+                        r'\textbf{ ' + ME + ' imedian CI}' : return_dict[label][ME][identity][2],
                     })
 
         try:
@@ -285,6 +186,71 @@ def identity_imedians(dataset_path:str, label_cols:list, dataset_name:str, score
     
     return return_dict
 
+
+def bootstrap_imedians(data: pd.DataFrame, id_col, score_col, n: int=1000):
+    full_identities_dict = {}
+    for _ in range(n):
+        identities_dict = {}
+        boot_strapped_data = data.sample(n=data.shape[0], replace=True)
+        overall_median_dict = {'scores': [], 'count': 0}
+        for identities, score in zip(boot_strapped_data[id_col], boot_strapped_data[score_col]):
+            if type(identities) == float:
+                continue
+            identities = identities.lower().split(';')
+            for identity in identities:
+                if identity not in identities_dict:
+                    identities_dict[identity] = {'scores': [], 'count': 0}
+                identities_dict[identity]['scores'].append(score)
+                identities_dict[identity]['count'] += 1
+            overall_median_dict['count'] += 1
+            overall_median_dict['scores'].append(score)
+        overall_median = statistics.median(overall_median_dict['scores'])
+        for identity in identities_dict:
+            if identities_dict[identity]['count'] > 0:
+                median_score = statistics.median(identities_dict[identity]['scores']) / overall_median
+            else:
+                median_score = 0
+            if identity not in full_identities_dict:
+                full_identities_dict[identity] = [round(median_score, 2)]
+            else:
+                full_identities_dict[identity].append(round(median_score,2))
+            identities_dict[identity]['scores'].append(round(median_score, 2))
+
+    for identity in full_identities_dict:
+        full_identities_dict[identity].sort()
+        full_identities_dict[identity] = [full_identities_dict[identity][int(n*0.975-1)],
+                                                             full_identities_dict[identity][int(n*0.025)-1]]
+    return full_identities_dict
+
+
+def bootstrap_ifprs(data: pd.DataFrame, id_col, flag_col, label_col, n: int=1000):
+    full_identities_dict = {}
+    for _ in range(n):
+        boot_strapped_data = data.sample(n=data.shape[0], replace=True)
+        overall_fpr = score_calculator({'true' : boot_strapped_data[label_col], 'pred': boot_strapped_data[flag_col]}, score='FPR')
+        identities_dict = {}
+        for identities, label, flag in zip(boot_strapped_data[id_col], boot_strapped_data[label_col], boot_strapped_data[flag_col]):
+            if type(identities) == float:
+                continue
+            identities = identities.lower().split(';')
+            for identity in identities:
+                if identity not in identities_dict:
+                    identities_dict[identity] = {'true' : [], 'pred' : []}
+                identities_dict[identity]['true'].append(label)
+                identities_dict[identity]['pred'].append(flag)
+        identities_dict = {identity : round(score_calculator(identities_dict[identity], score='FPR')/overall_fpr, 2) for identity in identities_dict}
+        for identity in identities_dict:
+            if identity not in full_identities_dict:
+                full_identities_dict[identity] = [identities_dict[identity]]
+            else:
+                full_identities_dict[identity].append(identities_dict[identity])
+
+    for identity in full_identities_dict:
+        full_identities_dict[identity].sort()
+        full_identities_dict[identity] = [full_identities_dict[identity][int(n*0.975)-1], 
+                                          full_identities_dict[identity][int(n*0.025)-1]]
+    
+    return full_identities_dict
 
 def get_max_score(score_dict):
     max_ifpr = ['', 0, 0]
@@ -328,11 +294,12 @@ def identity_ifprs(dataset_path:str, label_cols:list, dataset_name:str, score_ty
             me_flags = data[me_col].tolist()
             overall_fpr = score_calculator({'true' : true_labels, 'pred': me_flags}, score='FPR')
             if identity_type == 'big':
-                data_identities = data['Big_identity'].tolist()
+                id_col = 'Big_identity'
                 identities_dict = {identity.lower() : {'true' : [], 'pred' : []} for category in categories for identity in categories[category]}
             else:
-                data_identities = data['Sub_Identities'].tolist()
+                id_col = 'Sub_Identities'
                 identities_dict = {}
+            data_identities = data[id_col].tolist()
                     
             for identities, label, flag in zip(data_identities, true_labels, me_flags):
                 if type(identities) == float:
@@ -347,6 +314,9 @@ def identity_ifprs(dataset_path:str, label_cols:list, dataset_name:str, score_ty
             identities_dict = {identity : [round(score_calculator(identities_dict[identity], score='FPR')/overall_fpr, 2),\
                 confusion_matrix(identities_dict[identity]['true'], identities_dict[identity]['pred'], labels=[0,1]).ravel()[1]] \
                     for identity in identities_dict}
+            bootstrap_data = bootstrap_ifprs(data, id_col, me_col, label_col)
+            for bootstrap_identity in bootstrap_data:
+                identities_dict[bootstrap_identity].append(bootstrap_data[bootstrap_identity])
             max_ifpr_dict[ME] = get_max_score(identities_dict)
             return_dict[label_col][ME] = identities_dict
         
@@ -380,6 +350,7 @@ def identity_ifprs(dataset_path:str, label_cols:list, dataset_name:str, score_ty
                     df_dict[identity].update({
                         r'\textbf{ ' + ME + ' ifprscore}' : return_dict[label][ME][identity][0],
                         r'\textbf{ ' +  ME + ' FP}' : return_dict[label][ME][identity][1],
+                        r'\textbf{ ' +  ME + ' iFPR CI}' : return_dict[label][ME][identity][2],
                     })
 
         try:
@@ -1140,37 +1111,44 @@ def add_metrics(metric_func, identity='big')->None:
 
 
 def make_ME_med_charts():
-    data_dict = {"Traditional" : pd.read_csv('Data/Traditional.csv'), "Generative": pd.read_csv('Data/GenAI.csv')}
-    ME_cols = {'Google': [r'\textbf{ Google imedianscore}', r'\textbf{ Google std}'],
-            'Jigsaw': [r'\textbf{ Perspective imedianscore}', r'\textbf{ Perspective std}'],
-            'OpenAI': [r'\textbf{ OpenAI imedianscore}', r'\textbf{ OpenAI std}']
-            }
+    data_dict = {"Traditional": pd.read_csv('Data/Traditional.csv'), "Generative": pd.read_csv('Data/GenAI.csv')}
+    ME_cols = {'Google': [r'\textbf{ Google imedianscore}', r'\textbf{ Google imedian CI}'],
+               'Jigsaw': [r'\textbf{ Perspective imedianscore}', r'\textbf{ Perspective imedian CI}'],
+               'OpenAI': [r'\textbf{ OpenAI imedianscore}', r'\textbf{ OpenAI imedian CI}']}
     colors = ['#1f78b4', '#33a02c', '#33a02c', '#8da0cb', '#8da0cb', '#fc8d62', '#fc8d62', '#e78ac3', '#e78ac3']
     
     for ME in ME_cols:
         medians = pd.DataFrame()
-        deviations = pd.DataFrame()
+        confidence_interval = pd.DataFrame()
         for data in data_dict:
             medians['Identity'] = data_dict[data][r'\textbf{Identity group}']
-            deviations['Identity'] = data_dict[data][r'\textbf{Identity group}']
-
+            confidence_interval['Identity'] = data_dict[data][r'\textbf{Identity group}']
             medians[data] = data_dict[data][ME_cols[ME][0]]
-            deviations[data] = data_dict[data][ME_cols[ME][1]]
-            
-        medians.set_index('Identity', inplace=True)
-        deviations.set_index('Identity', inplace=True)
-        fig, ax = plt.subplots()
+            confidence_interval[data] = data_dict[data][ME_cols[ME][1]].apply(lambda x: np.array(ast.literal_eval(x)))
 
-        medians['Traditional'].plot.bar(legend=False, yerr=deviations, ax=ax, capsize=4, title=f'{ME}', rot=45,
-                label='Traditional', figsize=(25, 20), xlabel='Identity groups', ylabel='Speech suppression',color=colors, width=-0.4, align='edge', hatch='/')
-        medians['Generative'].plot.bar(legend=True, yerr=deviations, ax=ax, capsize=4,
+        medians.set_index('Identity', inplace=True)
+        confidence_interval.set_index('Identity', inplace=True)
+        fig, ax = plt.subplots()
+        
+        # Calculate errors as a list of arrays
+        errors = [medians['Traditional'] - confidence_interval['Traditional'].apply(lambda x: x[1]),
+                  confidence_interval['Traditional'].apply(lambda x: x[0]) - medians['Traditional']]
+        
+        medians['Traditional'].plot.bar(legend=False, yerr=errors, ax=ax, capsize=4, title=f'{ME}', rot=45,
+                                        label='Traditional', figsize=(25, 20), xlabel='Identity groups', ylabel='Speech suppression',
+                                        color=colors, width=-0.4, align='edge', hatch='/')
+        
+        errors = [medians['Generative'] - confidence_interval['Generative'].apply(lambda x: x[1]),
+                  confidence_interval['Generative'].apply(lambda x: x[0]) - medians['Generative']]
+        
+        medians['Generative'].plot.bar(legend=True, yerr=errors, ax=ax, capsize=4,
                                        label='Generative', figsize=(25, 20), color=colors, width=0.4, align='edge', hatch='*')
         
         traditional_patch = mpatches.Patch(facecolor='white', edgecolor='black', hatch='/', label='Traditional')
         generative_patch = mpatches.Patch(facecolor='white', edgecolor='black', hatch='*', label='Generative')
-        plt.legend(handles = [traditional_patch,generative_patch])
+        plt.legend(handles=[traditional_patch, generative_patch])
         plt.ylim(0)
-        plt.axhline(y = 1.0, color = 'black', linestyle = '-')
+        plt.axhline(y=1.0, color='black', linestyle='-')
         plt.xticks(rotation=45)
         plt.savefig(f"./plots/{ME}Imedians.png", pad_inches=1, bbox_inches='tight')
         plt.clf()
@@ -1178,27 +1156,37 @@ def make_ME_med_charts():
         
 def make_ME_fpr_charts():
     data_dict = {"Traditional" : pd.read_csv('Data/Traditional.csv'), "Generative": pd.read_csv('Data/GenAI.csv')}
-    ME_cols = {'Anthropic': r'\textbf{ Anthropic ifprscore}',
-            'Llama Guard': r'\textbf{ Llama Guard ifprscore}',
-            'OpenAI': r'\textbf{ OpenAI ifprscore}'
+    ME_cols = {'Anthropic': [r'\textbf{ Anthropic ifprscore}', r'\textbf{ Anthropic iFPR CI}'],
+            'Llama Guard': [r'\textbf{ Llama Guard ifprscore}', r'\textbf{ Llama Guard iFPR CI}'],
+            'OpenAI': [r'\textbf{ OpenAI ifprscore}', r'\textbf{ OpenAI iFPR CI}']
             }
     colors = ['#1f78b4', '#33a02c', '#33a02c', '#8da0cb', '#8da0cb', '#fc8d62', '#fc8d62', '#e78ac3', '#e78ac3']
     
     for ME in ME_cols:
         ifprs = pd.DataFrame()
+        confidence_interval = pd.DataFrame()
         for data in data_dict:
             if 'Identity' not in ifprs.columns.tolist():
                 ifprs['Identity'] = data_dict[data][r'\textbf{Identity group}']
+                confidence_interval['Identity'] = data_dict[data][r'\textbf{Identity group}']
             else:
                 assert(ifprs['Identity'].tolist() == data_dict[data][r'\textbf{Identity group}'].tolist())
 
-            ifprs[data] = data_dict[data][ME_cols[ME]]
+            ifprs[data] = data_dict[data][ME_cols[ME][0]]
+            confidence_interval[data] = data_dict[data][ME_cols[ME][1]].apply(lambda x: np.array(ast.literal_eval(x)))
+            
             
         ifprs.set_index('Identity', inplace=True)
-        ifprs['Traditional'].plot.bar(legend=False, title=f'{ME}',
+        confidence_interval.set_index('Identity', inplace=True)
+        errors = [ifprs['Traditional'] - confidence_interval['Traditional'].apply(lambda x: x[1]),
+                  confidence_interval['Traditional'].apply(lambda x: x[0]) - ifprs['Traditional']]
+        ifprs['Traditional'].plot.bar(legend=False, title=f'{ME}',yerr=errors,
                                       label='Traditional', figsize=(25, 20), rot=45,
                 xlabel='Identity groups', ylabel='Speech suppression',color=colors, width=-0.4, align='edge', hatch='/')
-        ifprs['Generative'].plot.bar(legend=True, label='Generative', figsize=(25, 20),
+        
+        errors = [ifprs['Generative'] - confidence_interval['Generative'].apply(lambda x: x[1]),
+                  confidence_interval['Generative'].apply(lambda x: x[0]) - ifprs['Generative']]
+        ifprs['Generative'].plot.bar(legend=True, label='Generative', figsize=(25, 20), yerr=errors,
         xlabel='Identity groups',
         ylabel='Speech suppression',color=colors, width=0.4, align='edge', hatch='*')
         
@@ -1253,25 +1241,52 @@ def main():
     # print(pd.read_csv('Data/ifpr_table_sub_identities.csv').fillna('').astype('str').to_latex(index=False))
     # print(pd.read_csv('Data/imed_table_sub_identities.csv').fillna('').astype('str').to_latex(index=False))
     # gendata = pd.read_csv('Data/GenAI_sub_ids.csv').astype('str')
-    # print(gendata[[col for col in gendata.columns if 'std' not in col]].to_latex(index=False))
+    # print(gendata[[col for col in gendata.columns if 'CI' not in col]].to_latex(index=False))
     # trad_data = pd.read_csv('Data/Traditional_sub_ids.csv').astype('str')
-    # print(trad_data[[col for col in trad_data.columns if 'std' not in col]].to_latex(index=False))
+    # print(trad_data[[col for col in trad_data.columns if 'CI' not in col]].to_latex(index=False))
     
     # identity_imedians('Data/Combined/genAI_combined.csv', label_cols=['true_label'], dataset_name='GenAI', score_types=['True label'], other_table=True)
     # identity_ifprs('Data/Combined/genAI_combined.csv', label_cols=['true_label'], dataset_name='GenAI', score_types=['True label'], other_table=True)
-    identity_imedians('Data/Combined/traditional_combined.csv', label_cols=['true_label'], dataset_name='Traditional', score_types=['True label'], other_table=True)
-    identity_ifprs('Data/Combined/traditional_combined.csv', label_cols=['true_label'], dataset_name='Traditional', score_types=['True label'], other_table=True)
+    # identity_imedians('Data/Combined/traditional_combined.csv', label_cols=['true_label'], dataset_name='Traditional', score_types=['True label'], other_table=True)
+    # identity_ifprs('Data/Combined/traditional_combined.csv', label_cols=['true_label'], dataset_name='Traditional', score_types=['True label'], other_table=True)
 
 
     # add_metrics(identity_imeans)
     # add_metrics(identity_ifprs)
     # add_metrics(identity_imedians)
     
-    # make_ME_med_charts()
-    # make_ME_fpr_charts()
+    plt.rcParams.update({'font.size': 48})
+    make_ME_med_charts()
+    make_ME_fpr_charts()
     # get_overal_FPR()
     pass
 
-    
+def make_lw_data():
+    files = ['Data/Combined/genAI_combined.csv', 'Data/Combined/traditional_combined.csv']
+    final_data = None
+    for file in files:
+        
+        data = pd.read_csv(file)
+        print(data.columns)
+        continue
+        if 'genAI' in file:
+            data['GenAI'] = [True]*data.shape[0]
+        else:
+            data['GenAI'] = [False]*data.shape[0]
+        cols = ['dataset_name', 'subset_name', 'text', 'word_length', 'Big_identity', 'Sub_Identities',
+                'true_label', 'has_slur', 'GenAI', 'OpenAI_ME_bool', 'OpenAI_normalized',
+                'OctoAI_ME_bool', 'Anthropic_ME_bool', 'Google_ME_responses', 'perspective_ME_responses',
+                'PG score', 'PG-13 score', 'S', 'H', 'V', 'HR', 'SH', 'S3', 'H2', 'V2', 'Toxic']
+        if 'traditional_combined' in file:
+            cols.extend(['sexual', 'Hate', 'violence', 'harassment', 'self-harm', 'sex./minors', 'hate/threat.', 'viol./graphic'])
+        else:
+            cols.extend(['PG score', 'PG-13 score', 'S', 'H', 'V', 'HR', 'SH', 'S3', 'H2', 'V2'])
+        if final_data == None:
+            final_data = data[cols]
+        else:
+            final_data = pd.concat(final_data, data[cols])
+        
+    final_data.rename(columns={'comment_text': 'text', 'toxicity': 'Toxicity'}, inplace=True)
+
 if __name__ == "__main__":
     main()
