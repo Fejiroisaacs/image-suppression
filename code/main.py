@@ -1261,32 +1261,59 @@ def main():
     # get_overal_FPR()
     pass
 
+
 def make_lw_data():
     files = ['Data/Combined/genAI_combined.csv', 'Data/Combined/traditional_combined.csv']
+    columns = [
+        ['dataset_name', 'subset_name', 'text', 'true_label', 'Big_identity', 'Sub_Identities',
+         'PG score','word_length', 'PG-13 score', 'S', 'H', 'V', 'HR', 'SH', 'S3', 'H2', 'V2', 'Toxic',
+       'has_slur', 'OpenAI_data', 'Anthropic_data', 'OctoAI_data', 'Perspective_data', 'Google_data', 
+       'perspective_ME_responses', 'OpenAI_ME_responses', 'OpenAI_ME_bool',
+       'OpenAI_normalized', 'Anthropic_ME_bool',
+       'Google_ME_responses', 'OctoAI_ME_responses', 'OctoAI_ME_bool'], 
+        ['text', 'Sub_Identities', 'Big_identity', 'true_label', 'dataset_name', 'Hate', 'has_slur', 'subset_name', 'Offensive',
+       'severe_toxicity', 'obscene', 'sexual_explicit', 'identity_attack', 'insult', 'threat', 'word_length', 'OpenAI_ME_responses',
+       'perspective_ME_responses','OctoAI_ME_responses', 'OctoAI_ME_bool', 'Google_ME_responses',
+       'OpenAI_ME_bool', 'OpenAI_normalized',
+       'Anthropic_ME_bool', 'OpenAI_data', 'Anthropic_data', 
+        'OctoAI_data', 'Perspective_data', 'Google_data']
+    ]
+    data_subsets = ['GenAI', 'Traditional']
     final_data = None
-    for file in files:
-        
-        data = pd.read_csv(file)
-        print(data.columns)
-        continue
-        if 'genAI' in file:
-            data['GenAI'] = [True]*data.shape[0]
-        else:
-            data['GenAI'] = [False]*data.shape[0]
-        cols = ['dataset_name', 'subset_name', 'text', 'word_length', 'Big_identity', 'Sub_Identities',
-                'true_label', 'has_slur', 'GenAI', 'OpenAI_ME_bool', 'OpenAI_normalized',
-                'OctoAI_ME_bool', 'Anthropic_ME_bool', 'Google_ME_responses', 'perspective_ME_responses',
-                'PG score', 'PG-13 score', 'S', 'H', 'V', 'HR', 'SH', 'S3', 'H2', 'V2', 'Toxic']
-        if 'traditional_combined' in file:
-            cols.extend(['sexual', 'Hate', 'violence', 'harassment', 'self-harm', 'sex./minors', 'hate/threat.', 'viol./graphic'])
-        else:
-            cols.extend(['PG score', 'PG-13 score', 'S', 'H', 'V', 'HR', 'SH', 'S3', 'H2', 'V2'])
-        if final_data == None:
-            final_data = data[cols]
-        else:
-            final_data = pd.concat(final_data, data[cols])
-        
-    final_data.rename(columns={'comment_text': 'text', 'toxicity': 'Toxicity'}, inplace=True)
+    for file, col, subset in zip(files, columns, data_subsets):
+        data = pd.read_csv(file)#[col]
 
+        data['data_type'] = [subset] * data.shape[0]
+        if final_data is None:
+            final_data = data.copy()
+        else:
+            final_data = pd.concat([final_data, data])
+    final_data = final_data[['dataset_name', 'subset_name', 'data_type','text',  'word_length', 'true_label',
+       'Big_identity', 'Sub_Identities', 'PG score', 'PG-13 score',
+       'S', 'H', 'V', 'HR', 'SH', 'S3', 'H2','V2','has_slur',
+       'Hate', 'Offensive', 'severe_toxicity', 'obscene', 'sexual_explicit', 'identity_attack', 'insult', 'threat', 
+       'perspective_ME_responses', 'OpenAI_ME_bool',
+       'OpenAI_normalized', 'Anthropic_ME_bool', 'Google_ME_responses', 'OctoAI_ME_bool',
+       'OpenAI_data', 'Anthropic_data', 'OctoAI_data', 'Perspective_data', 'Google_data'
+       ]]
+    col_change = {
+        'perspective_ME_responses': ['jigsaw_score', lambda x: ast.literal_eval(x)\
+                    ["attributeScores"]["TOXICITY"]["spanScores"][0]["score"]["value"]\
+                        if "API error" not in x and "languageNotSupportedByAttributeError" not in x else None],
+        'OpenAI_normalized': ['openAI_score', lambda x: max(ast.literal_eval(x).values()) if 'API error' not in x else None],
+        'Google_ME_responses' : ['google_score', lambda x: max(ast.literal_eval(x).values()) if 'API error' not in x else None],
+    }
+    
+    for col in col_change:
+        print(col)
+        final_data[col] = final_data[col].apply(col_change[col][1])
+        final_data.rename(columns={col: col_change[col][0]}, inplace=True)
+
+    final_data.rename(columns={'OpenAI_ME_bool': 'openAI_flag', 'OctoAI_ME_bool': 'llama_guard_flag', 'Anthropic_ME_bool': 'anthropic_flag', 'Perspective_data': 'Jigsaw_data'}, inplace=True)
+    
+    final_data.to_csv('Data/Combined/Data.csv', index=True)
+    
+    
 if __name__ == "__main__":
-    main()
+    # main()
+    pass
