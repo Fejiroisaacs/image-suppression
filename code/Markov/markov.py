@@ -85,25 +85,25 @@ def add_toxicity():
 def get_ME_responses() -> None:
     """Get ME responses from ME's and makes new csv with the results"""
     dataset = pd.read_csv("Data/Markov/data_with_identity.csv")
-    # # perspective AI call
-    # start = time.time()
-    # perspective_responses = run_Perspective_ME(dataset["prompt"].tolist())
-    # dataset["perspective_ME_responses"] = perspective_responses[0]
-    # dataset['Perspective_data'] = perspective_responses[1]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv("Data/Markov/data_with_ME.csv", index=False)
+    # perspective AI call
+    start = time.time()
+    perspective_responses = run_Perspective_ME(dataset["prompt"].tolist())
+    dataset["perspective_ME_responses"] = perspective_responses[0]
+    dataset['Perspective_data'] = perspective_responses[1]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv("Data/Markov/data_with_ME.csv", index=False)
     
-    # # openAI call
-    # print("Starting ME call...")
-    # start = time.time()
-    # OpenAI_ME_responses = run_me_caller(dataset, "prompt")
-    # dataset["OpenAI_ME_responses"] = OpenAI_ME_responses[0]
-    # dataset["OpenAI_ME_bool"] = conv_openAI_ME_data(OpenAI_ME_responses[0])
-    # dataset['OpenAI_data'] = OpenAI_ME_responses[1]
-    # dataset.to_csv("Data/Markov/data_with_ME.csv", index=False)
-    # print("Elapsed time:", time.time() - start)
+    # openAI call
+    print("Starting ME call...")
+    start = time.time()
+    OpenAI_ME_responses = run_me_caller(dataset, "prompt")
+    dataset["OpenAI_ME_responses"] = OpenAI_ME_responses[0]
+    dataset["OpenAI_ME_bool"] = conv_openAI_ME_data(OpenAI_ME_responses[0])
+    dataset['OpenAI_data'] = OpenAI_ME_responses[1]
+    dataset.to_csv("Data/Markov/data_with_ME.csv", index=False)
+    print("Elapsed time:", time.time() - start)
 
-    # # Google ME call
+    # Google ME call
     start = time.time()
     Google_responses = run_google_ME(dataset["prompt"].tolist())
     dataset["Google_ME_responses"] = Google_responses[0]
@@ -120,21 +120,20 @@ def get_ME_responses() -> None:
     print("Elapsed time:", time.time() - start)
     dataset.to_csv('Data/Markov/data_with_ME.csv', index=False)
     
-    # # llama AI call
-    # start = time.time()
-    # OctoAI_responses = run_OctoAI_ME(dataset["prompt"].tolist())
-    # dataset["OctoAI_ME_responses"] = OctoAI_responses[0]
-    # dataset["OctoAI_ME_bool"] = OctoAI_responses[1]
-    # dataset['OctoAI_data'] = OctoAI_responses[2]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv("Data/Markov/data_with_ME.csv", index=False)
+    # llama AI call
+    start = time.time()
+    OctoAI_responses = run_OctoAI_ME(dataset["prompt"].tolist())
+    dataset["OctoAI_ME_responses"] = OctoAI_responses[0]
+    dataset["OctoAI_ME_bool"] = OctoAI_responses[1]
+    dataset['OctoAI_data'] = OctoAI_responses[2]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv("Data/Markov/data_with_ME.csv", index=False)
 
 
-if __name__ == "__main__":
-    # add_toxicity()
-    # add_identity()
-    # get_ME_responses()
-    
+def run_openAI_audit():
+    add_toxicity()
+    add_identity()
+    get_ME_responses()
     # ME_score_analysis(identity_type="small", data_type="Markov", file="data_with_ME.csv", ME="PerspectiveAI")
     # ME_score_analysis(identity_type="big", data_type="Markov", file="data_with_ME.csv", ME="PerspectiveAI")
     
@@ -149,4 +148,7 @@ if __name__ == "__main__":
     #                 file="Data_with_ME.csv", toxic_col="Toxic", ME="Anthropic")
     # openAI_analysis(identity_type="Sub_Identities", data_type="Markov",
     #                 file="Data_with_ME.csv", toxic_col="Toxic", ME="Anthropic")
-    pass
+    
+    
+if __name__ == "__main__":
+    run_openAI_audit()

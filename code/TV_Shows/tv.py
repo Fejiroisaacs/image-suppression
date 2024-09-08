@@ -21,7 +21,7 @@ from main import conv_openAI_ME_data
 import time
 from Movies.get_movie_data import score_toxicity
 from main import ME_score_analysis, openAI_analysis
-
+from get_tv_data import data_prep
 
 def add_identity_using_tags(file_paths):
     # disability
@@ -319,67 +319,67 @@ def white_tagged(our_list):
     pd.DataFrame(white_shows, columns=['White']).drop_duplicates().to_csv('Data/TV Shows/tags/Race-Ethnicity/White/white_tagged_tvs.csv', index=False)
 
 
-def main():
+def tags():
     shows = pd.read_csv("Data/TV Shows/show_list.csv")['show_name'].tolist()
     
-    # make_tags_general(our_tv_list=shows, category_title="Sexuality", identity_title="LGBT-related",
-    #                     identities=["LGBT", 'LGBT'], 
-    #                     category_titles=['Category:LGBT-related television shows', 'Category:LGBT-related television'],
-    # )
+    make_tags_general(our_tv_list=shows, category_title="Sexuality", identity_title="LGBT-related",
+                        identities=["LGBT", 'LGBT'], 
+                        category_titles=['Category:LGBT-related television shows', 'Category:LGBT-related television'],
+    )
     
-    # make_tags_general(our_tv_list=shows,
-    #                   category_title="Religion", identity_title="Christian", identities=["Christian", 'Christian', 'Christian', 'Christian'],
-    #                   category_titles=["Category:Television series about Christianity", 'Category:Christian television',
-    #                                    'Category:Catholic television', 'Category:Television series about nuns']
-    # )
+    make_tags_general(our_tv_list=shows,
+                      category_title="Religion", identity_title="Christian", identities=["Christian", 'Christian', 'Christian', 'Christian'],
+                      category_titles=["Category:Television series about Christianity", 'Category:Christian television',
+                                       'Category:Catholic television', 'Category:Television series about nuns']
+    )
     
-    # make_tags_general(our_tv_list=shows,
-    #                 category_title="Religion",
-    #                 identity_title="Non-Christian",
-    #                 identities=["Islam", "Jewish", "Other-Non-Christian", "Jewish", 'Islam'],
-    #                 category_titles=["Category:Television series about Islam","Category:Television series about Jews and Judaism",
-    #                                 "Category:Television series about Buddhism", "Category:Jewish television",
-    #                                 'Category:Television shows about Islam'],
-    # )
+    make_tags_general(our_tv_list=shows,
+                    category_title="Religion",
+                    identity_title="Non-Christian",
+                    identities=["Islam", "Jewish", "Other-Non-Christian", "Jewish", 'Islam'],
+                    category_titles=["Category:Television series about Islam","Category:Television series about Jews and Judaism",
+                                    "Category:Television series about Buddhism", "Category:Jewish television",
+                                    'Category:Television shows about Islam'],
+    )
 
-    # make_tags_general(our_tv_list=shows,
-    #                   category_title="Race-Ethnicity",
-    #                   identity_title="Non-White",
-    #                   identities=["Black", "Black", "Black", "Asian", "Native-Americans", "Native-Americans", "Latinx",
-    #                               "Latinx", "Latinx", "Asian", "Asian", 'Asian',"Middle-Eastern-North-African",
-    #                               'Middle-Eastern-North-African', 'Native-Americans', 'Asian', 'Asian'],
-    #                   category_titles=["Category:African-American television",
-    #                                    "Category:American black television series",
-    #                                    "Category:2000s American black sitcoms",
-    #                                    "Category:Asian-American television",
-    #                                    "Category:Television shows about Native Americans",
-    #                                    "Category:Native American television",
-    #                                    "Category:Hispanic and Latino American sitcoms",
-    #                                    "Category:Hispanic and Latino American television",
-    #                                    'Category:Spanish television series',
-    #                                    'Category:Chinese television series by genre',
-    #                                    'Category:Chinese television shows',
-    #                                    'Category:Chinese American television',
-    #                                    'Category:Television series set in the Middle East',
-    #                                    'Category:Arabic television series',
-    #                                    'Category:Indigenous television in Canada',
-    #                                    'Category:21st-century South Korean television series debuts',
-    #                                    'Category:Indian English-language television shows'
-    #                                    ],
-    # )
+    make_tags_general(our_tv_list=shows,
+                      category_title="Race-Ethnicity",
+                      identity_title="Non-White",
+                      identities=["Black", "Black", "Black", "Asian", "Native-Americans", "Native-Americans", "Latinx",
+                                  "Latinx", "Latinx", "Asian", "Asian", 'Asian',"Middle-Eastern-North-African",
+                                  'Middle-Eastern-North-African', 'Native-Americans', 'Asian', 'Asian'],
+                      category_titles=["Category:African-American television",
+                                       "Category:American black television series",
+                                       "Category:2000s American black sitcoms",
+                                       "Category:Asian-American television",
+                                       "Category:Television shows about Native Americans",
+                                       "Category:Native American television",
+                                       "Category:Hispanic and Latino American sitcoms",
+                                       "Category:Hispanic and Latino American television",
+                                       'Category:Spanish television series',
+                                       'Category:Chinese television series by genre',
+                                       'Category:Chinese television shows',
+                                       'Category:Chinese American television',
+                                       'Category:Television series set in the Middle East',
+                                       'Category:Arabic television series',
+                                       'Category:Indigenous television in Canada',
+                                       'Category:21st-century South Korean television series debuts',
+                                       'Category:Indian English-language television shows'
+                                       ],
+    )
 
-    # make_tags_general(our_tv_list=shows,
-    #                     category_title="Disability",
-    #                     identity_title="Disability",
-    #                     identities=["Physical-Disability", "Physical-Disability", "Mental-Disability", "Mental-Disability", "Mental-Disability"],
-    #                     category_titles=['Category:Television shows about disability', 'Category:Obesity in television', 
-    #                                      'Category:Mental disorders in television', 'Category:Down syndrome in television',
-    #                                      'Category:Autism in television']
-    # )
+    make_tags_general(our_tv_list=shows,
+                        category_title="Disability",
+                        identity_title="Disability",
+                        identities=["Physical-Disability", "Physical-Disability", "Mental-Disability", "Mental-Disability", "Mental-Disability"],
+                        category_titles=['Category:Television shows about disability', 'Category:Obesity in television', 
+                                         'Category:Mental disorders in television', 'Category:Down syndrome in television',
+                                         'Category:Autism in television']
+    )
 
-    # white_tagged(shows)
+    white_tagged(shows)
     
-    # men_tags(shows)
+    men_tags(shows)
     
     # tag women using IMDB list
     
@@ -389,9 +389,9 @@ def main():
     add_identity(paths)
     add_identity_using_tags(paths)
     
-    files = ['long_IMDB_with_ME.csv', 'long_IMDB_with_ME.csv', 'mid_wiki_with_ME']
-    identity_types = ['small', 'big']
-    AIs = ['PerspectiveAI']
+    # files = ['long_IMDB_with_ME.csv', 'long_IMDB_with_ME.csv', 'mid_wiki_with_ME']
+    # identity_types = ['small', 'big']
+    # AIs = ['PerspectiveAI']
     # ME_score_analysis(identity_type="small", data_type="TV Shows", file="long_IMDB_with_ME.csv", ME="PerspectiveAI", ex="")
     # ME_score_analysis(identity_type="big", data_type="TV Shows", file="long_IMDB_with_ME.csv", ME="PerspectiveAI", ex="")
     
@@ -400,7 +400,6 @@ def main():
     
     # ME_score_analysis(identity_type="small", data_type="TV Shows", file="mid_wiki_with_ME.csv", ME="PerspectiveAI", ex='')
     # ME_score_analysis(identity_type="big", data_type="TV Shows", file="mid_wiki_with_ME.csv", ME="PerspectiveAI", ex='')
-
     
     
 def imdb_age_ratings():    
@@ -413,7 +412,6 @@ def imdb_age_ratings():
     other_data['episode_title'] =  other_data['episode_title'].apply(lambda x: x.capitalize()).tolist()
     final['show_name'] = final['show_name'].apply(lambda x: x.capitalize()).tolist()
     other_data['show_name'] =  other_data['show_name'].apply(lambda x: x.capitalize()).tolist()
-    
     
     combined = pd.merge(final, other_data, how='inner', on=['show_name', 'episode_title']).drop_duplicates()
     combined.to_csv(input_data, index=False)
@@ -447,11 +445,15 @@ def toxicity_scores():
         print(dataset.columns)
         dataset.to_csv(path, index=False)
 
-if __name__ == "__main__":
-    # make_data_subsets()
-    # get_ME_responses()
-    # imdb_age_ratings()
-    # toxicity_scores()
-    main()
+
+def run_tv_audit():
+    data_prep()
+    make_data_subsets()
+    tags()
+    toxicity_scores()
+    imdb_age_ratings()
+    get_ME_responses()
     
-    pass
+    
+if __name__ == "__main__":
+    run_tv_audit()

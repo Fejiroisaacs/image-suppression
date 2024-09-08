@@ -1,11 +1,3 @@
-""""
-Description: A program to use the wikipedia API to gather TV and movie data
-Author:
-Date:
-Created for use in the GPT benchmark suite, more information here: 
-"""
-
-# Imports:
 import wikipedia as wiki
 import pandas as pd
 import tmdbsimple as tmdb
@@ -14,10 +6,10 @@ import time, datetime
 
 tmdb.API_KEY = 'ENTER API KEY'
 
-def main():
+def data_prep():
     get_TMDB_shows()
     make_episode_db()
-    pass
+    
 
 def conv_ids(id_list):
     id_dict = {
@@ -121,7 +113,4 @@ def get_age_ratings():
             age_ratings.append([])
     file['age_ratings'] = age_ratings
     file.to_csv("Data/TV Shows/show_list_ratings.csv", index=False)
-
-get_age_ratings() 
-
-# main()
+ 

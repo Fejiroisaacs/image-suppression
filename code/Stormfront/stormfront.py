@@ -87,68 +87,66 @@ def make_data():
 def get_ME_responses() -> None:
     """Get ME responses from ME's and makes new csv with the results"""
     dataset = pd.read_csv("Data/Stormfront/stormfront_data_identity.csv")
-    # # perspective AI call
-    # start = time.time()
-    # perspective_responses = run_Perspective_ME(dataset["Sentence"].tolist())
-    # dataset["perspective_ME_responses"] = perspective_responses[0]
-    # dataset['Perspective_data'] = perspective_responses[1]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv("Data/Stormfront/stormfront_data_ME.csv", index=False)
+    # perspective AI call
+    start = time.time()
+    perspective_responses = run_Perspective_ME(dataset["Sentence"].tolist())
+    dataset["perspective_ME_responses"] = perspective_responses[0]
+    dataset['Perspective_data'] = perspective_responses[1]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv("Data/Stormfront/stormfront_data_ME.csv", index=False)
     
-    # # openAI call
-    # print("Starting ME call...")
-    # start = time.time()
-    # OpenAI_ME_responses = run_me_caller(dataset, "Sentence")
-    # dataset["OpenAI_ME_responses"] = OpenAI_ME_responses[0]
-    # dataset["OpenAI_ME_bool"] = conv_openAI_ME_data(OpenAI_ME_responses[0])
-    # dataset['OpenAI_data'] = OpenAI_ME_responses[1]
-    # dataset.to_csv("Data/Stormfront/stormfront_data_ME.csv", index=False)
-    # print("Elapsed time:", time.time() - start)
+    # openAI call
+    print("Starting ME call...")
+    start = time.time()
+    OpenAI_ME_responses = run_me_caller(dataset, "Sentence")
+    dataset["OpenAI_ME_responses"] = OpenAI_ME_responses[0]
+    dataset["OpenAI_ME_bool"] = conv_openAI_ME_data(OpenAI_ME_responses[0])
+    dataset['OpenAI_data'] = OpenAI_ME_responses[1]
+    dataset.to_csv("Data/Stormfront/stormfront_data_ME.csv", index=False)
+    print("Elapsed time:", time.time() - start)
 
     # Google ME call
-    # start = time.time()
-    # Google_responses = run_google_ME(dataset["Sentence"].tolist())
-    # dataset["Google_ME_responses"] = Google_responses[0]
-    # dataset['Google_data'] = Google_responses[1]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv("Data/Stormfront/stormfront_data_ME.csv", index=False)
+    start = time.time()
+    Google_responses = run_google_ME(dataset["Sentence"].tolist())
+    dataset["Google_ME_responses"] = Google_responses[0]
+    dataset['Google_data'] = Google_responses[1]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv("Data/Stormfront/stormfront_data_ME.csv", index=False)
     
-    # # Anthropic ME call
-    # start = time.time()
-    # Anthropic_responses = run_anthropic_ME(dataset["Sentence"].tolist())
-    # dataset["Anthropic_ME_responses"] = Anthropic_responses[0]
-    # dataset["Anthropic_ME_bool"] = Anthropic_responses[1]
-    # dataset['Anthropic_data'] = Anthropic_responses[2]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv('Data/Stormfront/stormfront_data_ME.csv', index=False)
+    # Anthropic ME call
+    start = time.time()
+    Anthropic_responses = run_anthropic_ME(dataset["Sentence"].tolist())
+    dataset["Anthropic_ME_responses"] = Anthropic_responses[0]
+    dataset["Anthropic_ME_bool"] = Anthropic_responses[1]
+    dataset['Anthropic_data'] = Anthropic_responses[2]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv('Data/Stormfront/stormfront_data_ME.csv', index=False)
     
-    # dataset = pd.read_csv("Data/Stormfront/stormfront_data_ME.csv")
-    # # llama AI call
-    # start = time.time()
-    # OctoAI_responses = run_OctoAI_ME(dataset["Sentence"].tolist())
-    # dataset["OctoAI_ME_responses"] = OctoAI_responses[0]
-    # dataset["OctoAI_ME_bool"] = OctoAI_responses[1]
-    # dataset['OctoAI_data'] = OctoAI_responses[2]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv("Data/Stormfront/stormfront_data_ME.csv", index=False)
+    # llama AI call
+    start = time.time()
+    OctoAI_responses = run_OctoAI_ME(dataset["Sentence"].tolist())
+    dataset["OctoAI_ME_responses"] = OctoAI_responses[0]
+    dataset["OctoAI_ME_bool"] = OctoAI_responses[1]
+    dataset['OctoAI_data'] = OctoAI_responses[2]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv("Data/Stormfront/stormfront_data_ME.csv", index=False)
     
     
-def main():
-    # get_ME_responses()
-    # add_identity()
-    # make_data()
-    # ME_score_analysis(identity_type="small", data_type="Stormfront", file="stormfront_data_ME.csv", ME="PerspectiveAI")
-    # ME_score_analysis(identity_type="big", data_type="Stormfront", file="stormfront_data_ME.csv", ME="PerspectiveAI")
-    # openAI_analysis(identity_type="Big_identity", data_type="Stormfront", file="stormfront_data_ME.csv", toxic_col="label")
-    # openAI_analysis(identity_type="Sub_Identities", data_type="Stormfront", file="stormfront_data_ME.csv", toxic_col="label")
-    # ME_score_analysis(identity_type="big", data_type="Stormfront", file="stormfront_data_ME.csv", ME="Google")
-    # openAI_analysis(identity_type="Big_identity", data_type="Stormfront",
-    #                 file="stormfront_data_ME.csv", toxic_col="label", ME="OctoAI")
-    # openAI_analysis(identity_type="Big_identity", data_type="Stormfront",
-    #                 file="stormfront_data_ME.csv", toxic_col="label", ME="Anthropic")
+def run_stormfront_audit():
+    make_data()
+    add_identity()
+    get_ME_responses()
     
-    pass
+    ME_score_analysis(identity_type="small", data_type="Stormfront", file="stormfront_data_ME.csv", ME="PerspectiveAI")
+    ME_score_analysis(identity_type="big", data_type="Stormfront", file="stormfront_data_ME.csv", ME="PerspectiveAI")
+    openAI_analysis(identity_type="Big_identity", data_type="Stormfront", file="stormfront_data_ME.csv", toxic_col="label")
+    openAI_analysis(identity_type="Sub_Identities", data_type="Stormfront", file="stormfront_data_ME.csv", toxic_col="label")
+    ME_score_analysis(identity_type="big", data_type="Stormfront", file="stormfront_data_ME.csv", ME="Google")
+    openAI_analysis(identity_type="Big_identity", data_type="Stormfront",
+                    file="stormfront_data_ME.csv", toxic_col="label", ME="OctoAI")
+    openAI_analysis(identity_type="Big_identity", data_type="Stormfront",
+                    file="stormfront_data_ME.csv", toxic_col="label", ME="Anthropic")
 
 
 if __name__ == "__main__":
-    main()
+    run_stormfront_audit()

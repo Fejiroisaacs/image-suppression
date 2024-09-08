@@ -22,39 +22,38 @@ from run_anthropic_ME import run_anthropic_ME
 
 def get_ME_responses() -> None:
     """Get ME responses from OpenAI and makes new csv with the results"""
-    # data = pd.read_csv("./Data/Dixon/Data_with_identities.csv")
-    # print("Starting ME call...")
-    # OpenAI_ME_responses = run_me_caller(data, "phrase")
-    # data["OpenAI_ME_responses"] = OpenAI_ME_responses[0]
-    # data["OpenAI_ME_bool"] = conv_openAI_ME_data(OpenAI_ME_responses[0])
-    # dataset['OpenAI_data'] = OpenAI_ME_responses[1]
-    # data.to_csv("./Data/Dixon/Data_with_ME.csv", index=False)
+    dataset = pd.read_csv("./Data/Dixon/Data_with_identities.csv")
+    print("Starting ME call...")
+    OpenAI_ME_responses = run_me_caller(dataset, "phrase")
+    dataset["OpenAI_ME_responses"] = OpenAI_ME_responses[0]
+    dataset["OpenAI_ME_bool"] = conv_openAI_ME_data(OpenAI_ME_responses[0])
+    dataset['OpenAI_data'] = OpenAI_ME_responses[1]
+    dataset.to_csv("./Data/Dixon/Data_with_ME.csv", index=False)
     
-    dataset = pd.read_csv("./Data/Dixon/Data_with_ME.csv")
-    # # perspective AI call
-    # start = time.time()
-    # perspective_responses = run_Perspective_ME(dataset['phrase'].tolist())
-    # dataset["perspective_ME_responses"] = perspective_responses[0]
-    # dataset['Perspective_data'] = perspective_responses[1]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv('./Data/Dixon/Data_with_ME.csv', index=False)
+    # perspective AI call
+    start = time.time()
+    perspective_responses = run_Perspective_ME(dataset['phrase'].tolist())
+    dataset["perspective_ME_responses"] = perspective_responses[0]
+    dataset['Perspective_data'] = perspective_responses[1]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv('./Data/Dixon/Data_with_ME.csv', index=False)
     
     # # llama AI call
-    # start = time.time()
-    # OctoAI_responses = run_OctoAI_ME(dataset['phrase'].tolist())
-    # dataset["OctoAI_ME_responses"] = OctoAI_responses[0]
-    # dataset["OctoAI_ME_bool"] = OctoAI_responses[1]
-    # dataset['OctoAI_data'] = OctoAI_responses[2]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv('./Data/Dixon/Data_with_ME.csv', index=False)
+    start = time.time()
+    OctoAI_responses = run_OctoAI_ME(dataset['phrase'].tolist())
+    dataset["OctoAI_ME_responses"] = OctoAI_responses[0]
+    dataset["OctoAI_ME_bool"] = OctoAI_responses[1]
+    dataset['OctoAI_data'] = OctoAI_responses[2]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv('./Data/Dixon/Data_with_ME.csv', index=False)
     
     # Google ME call
-    # start = time.time()
-    # Google_responses = run_google_ME(dataset['phrase'].tolist())
-    # dataset["Google_ME_responses"] = Google_responses[0]
-    # dataset['Google_data'] = Google_responses[1]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv('./Data/Dixon/Data_with_ME.csv', index=False)
+    start = time.time()
+    Google_responses = run_google_ME(dataset['phrase'].tolist())
+    dataset["Google_ME_responses"] = Google_responses[0]
+    dataset['Google_data'] = Google_responses[1]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv('./Data/Dixon/Data_with_ME.csv', index=False)
     
     # Anthropic ME call
     start = time.time()
@@ -65,33 +64,7 @@ def get_ME_responses() -> None:
     print("Elapsed time:", time.time() - start)
     dataset.to_csv('./Data/Dixon/Data_with_ME.csv', index=False)
     
-    
-    
-    
-def conv_ME_data() -> None:
-    """Converts ME responses to bool values and makes new csv"""
-    ME_data = pd.read_csv("./Data/Dixon/Data_with_ME.csv")
-    parsed_ME_data = parse_ME_response(list(ME_data["OpenAI_ME_responses"]))
 
-    new_ME_output = [1 if ME_response[0]["flagged"] else 0 for ME_response in parsed_ME_data]
-    ME_data["OpenAI_ME_bool"] =  new_ME_output
-    
-    ME_data.to_csv("./Data/Dixon/Data_with_ME.csv", index=False)
-    # conv_toxicity()
-
-
-def conv_toxicity() -> None:
-    """converts toxicity values from str to bool"""
-    ME_data = pd.read_csv("./Data/Dixon/Data_with_OpenAI_ME_bool.csv")
-    ME_data["toxicity"] = [1 if toxicity == "toxic" else 0 for toxicity in ME_data['toxicity']]
-    ME_data.to_csv("./Data/Dixon/Data_with_OpenAI_ME_bool.csv", index=False)
-
-
-def parse_ME_response(ME_data:pd.DataFrame) -> list:
-    """Converts each response from string to dictionary then returns the results"""
-    return [ast.literal_eval(ME_dict)["results"] for ME_dict in ME_data]
-    
-    
 def update_data() -> None:
     """Reads Dixon data and makes relevant data for this project"""
     
@@ -151,12 +124,10 @@ def update_data() -> None:
     data.to_csv("./Data/Dixon/Data_with_identities.csv", index=False)
 
 
-def main():
-    # update_data()
+def run_kaggle_audit():
+    update_data()
     get_ME_responses()
-    # conv_ME_data()
-    pass
 
 
 if __name__ == "__main__":
-    main()
+    run_kaggle_audit()

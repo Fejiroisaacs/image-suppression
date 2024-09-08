@@ -29,14 +29,14 @@ from run_perspective_ME import run_Perspective_ME
 from run_llama_ME import run_OctoAI_ME
 from run_google_ME import run_google_ME
 from run_anthropic_ME import run_anthropic_ME
-
+from movie_tagger import run_audit as more_data_prep
 """
 API Key
 """
 tmdb.API_KEY = 'ENTER API KEY'
 
 
-def main():
+def data_prep():
     opts = parse_args()
     out_data = pd.DataFrame()
     try:
@@ -47,82 +47,82 @@ def main():
        return
 
     # tmbd with release year and genre
-    # genre, year = get_genre_year(dataset["id"])
-    # dataset["genres"] = genre
-    # dataset["Release year"] = year
-    # dataset.to_csv("./Data/Movies/TMDB_with_genre.csv", index=False)
+    genre, year = get_genre_year(dataset["id"])
+    dataset["genres"] = genre
+    dataset["Release year"] = year
+    dataset.to_csv("./Data/Movies/TMDB_with_genre.csv", index=False)
     
-    # print("Getting show IDs...")
-    # ids = get_tmdb_ids(dataset, True, colname) # returns a set
-    # print("ids " + str(ids))
-    # print("Show IDs found")
+    print("Getting show IDs...")
+    ids = get_tmdb_ids(dataset, True, colname) # returns a set
     # turn list of ids into Series, append to df 
 
-    # print("Getting content ratings...")
-    # names, ratings, release_dates = get_content_ratings(ids, True)
-    # # turn list of ratings into Series, append to df 
-    # out_data['title'] = names
-    # out_data['ratings'] = ratings
-    # out_data['release'] = release_dates
-    # print(out_data)
-    # print("Content ratings found")
+    print("Getting content ratings...")
+    names, ratings, release_dates = get_content_ratings(ids, True)
+    # turn list of ratings into Series, append to df 
+    out_data['title'] = names
+    out_data['ratings'] = ratings
+    out_data['release'] = release_dates
 
 
-    # uncomment to get wiki plots
-    # print("Getting wiki descriptions...")
-    # descs = get_wiki_descs(dataset) # change back to out_data 
-    # dataset['plots'] = descs
-    # dataset.to_csv('./Data/Movies/full_TMDB_with_wiki_final.csv', index=False)
-    
-    # uncomment to get rating scores
-    # print("Getting rating scores...")
-    # print(dataset.shape)
-    # dataset.dropna(subset=["plots"], inplace=True)
-    # print(dataset.shape)
-    # ratings_set = ['G', 'PG', 'PG-13', 'R', 'NC-17']
-    # toxicity_scores = score_toxicity(dataset, ratings_set, 'rating')
-    # print("Appending rating scores...")
-    # for i in range(len(ratings_set)):
-    #     dataset[f"{ratings_set[i]} score"] = toxicity_scores[:, i]
-    # print("Finished appending scores")
-    # dataset.to_csv('./Data/Movies/full_TMDB_wiki_with_scores.csv', index=False)
-    
+    # getting wiki plots
+    print("Getting wiki descriptions...")
+    descs = get_wiki_descs(dataset) # change back to out_data 
+    dataset['plots'] = descs
+    dataset.to_csv('./Data/Movies/full_TMDB_with_wiki_final.csv', index=False)
+
+    print("Getting rating scores...")
+    print(dataset.shape)
+    dataset.dropna(subset=["plots"], inplace=True)
+    print(dataset.shape)
+    ratings_set = ['G', 'PG', 'PG-13', 'R', 'NC-17']
+    toxicity_scores = score_toxicity(dataset, ratings_set, 'rating')
+    print("Appending rating scores...")
+    for i in range(len(ratings_set)):
+        dataset[f"{ratings_set[i]} score"] = toxicity_scores[:, i]
+    print("Finished appending scores")
+    dataset.to_csv('./Data/Movies/full_TMDB_wiki_with_scores.csv', index=False)
+
+
+def get_ME_responses():
+    more_data_prep()
+    dataset = pd.read_csv("./Data/Movies/TMDB_plots_scores_identity.csv")
+
     # moderation endpoint calls
-    # print("Calling OpenAI ME on movie data")
-    # print("Getting ME responses...")
-    # dataset = dataset.dropna(subset=["plots"]).reset_index()
-    # responses = run_me_caller(dataset, 'plots')
-    # print("Finished calling ME ")
-    # dataset['OpenAI_ME_responses'] = responses[0]
-    # print("Converting ME_responses")
-    # dataset["OpenAI_ME_bool"] = conv_openAI_ME_data(responses[0])
-    # dataset['OpenAI_data'] = responses[1]
-    # dataset.to_csv('./Data/Movies/TMDB_with_ME.csv', index=False)
+    print("Calling OpenAI ME on movie data")
+    print("Getting ME responses...")
+    dataset = dataset.dropna(subset=["plots"]).reset_index()
+    responses = run_me_caller(dataset, 'plots')
+    print("Finished calling ME ")
+    dataset['OpenAI_ME_responses'] = responses[0]
+    print("Converting ME_responses")
+    dataset["OpenAI_ME_bool"] = conv_openAI_ME_data(responses[0])
+    dataset['OpenAI_data'] = responses[1]
+    dataset.to_csv('./Data/Movies/TMDB_with_ME.csv', index=False)
     
     # perspective AI call
-    # start = time.time()
-    # perspective_responses = run_Perspective_ME(dataset['plots'].tolist())
-    # dataset["perspective_ME_responses"] = perspective_responses[0]
-    # dataset['Perspective_data'] = perspective_responses[1]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv('./Data/Movies/TMDB_with_ME.csv', index=False)
+    start = time.time()
+    perspective_responses = run_Perspective_ME(dataset['plots'].tolist())
+    dataset["perspective_ME_responses"] = perspective_responses[0]
+    dataset['Perspective_data'] = perspective_responses[1]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv('./Data/Movies/TMDB_with_ME.csv', index=False)
 
     # OctoAI call
-    # start = time.time()
-    # OctoAI_responses = run_OctoAI_ME(dataset['plots'].tolist())
-    # dataset["OctoAI_ME_responses"] = OctoAI_responses[0]
-    # dataset["OctoAI_ME_bool"] = OctoAI_responses[1]
-    # dataset['OctoAI_data'] = OctoAI_responses[2]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv('./Data/Movies/TMDB_with_ME.csv', index=False)
+    start = time.time()
+    OctoAI_responses = run_OctoAI_ME(dataset['plots'].tolist())
+    dataset["OctoAI_ME_responses"] = OctoAI_responses[0]
+    dataset["OctoAI_ME_bool"] = OctoAI_responses[1]
+    dataset['OctoAI_data'] = OctoAI_responses[2]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv('./Data/Movies/TMDB_with_ME.csv', index=False)
 
     # Google ME call
-    # start = time.time()
-    # Google_responses = run_google_ME(dataset['plots'].tolist())
-    # dataset["Google_ME_responses"] = Google_responses[0]
-    # dataset['Google_data'] = Google_responses[1]
-    # print("Elapsed time:", time.time() - start)
-    # dataset.to_csv('./Data/Movies/TMDB_with_ME.csv', index=False)
+    start = time.time()
+    Google_responses = run_google_ME(dataset['plots'].tolist())
+    dataset["Google_ME_responses"] = Google_responses[0]
+    dataset['Google_data'] = Google_responses[1]
+    print("Elapsed time:", time.time() - start)
+    dataset.to_csv('./Data/Movies/TMDB_with_ME.csv', index=False)
     
     # Anthropic ME call
     start = time.time()
@@ -132,7 +132,12 @@ def main():
     dataset['Anthropic_data'] = Anthropic_responses[2]
     print("Elapsed time:", time.time() - start)
     dataset.to_csv('./Data/Movies/TMDB_with_ME.csv', index=False)
-    
+
+
+def run_movies_audit():
+    data_prep()
+    get_ME_responses()
+
     
 def parse_args():
     """Parse command line arguments."""
@@ -362,4 +367,4 @@ def score_toxicity(df:pd.DataFrame, ratings_ordered_set:list, col:str) -> np.nda
 
 
 if __name__ == "__main__":
-    main()
+    run_movies_audit()

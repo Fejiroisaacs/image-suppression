@@ -64,49 +64,48 @@ def get_ME_responses() -> None:
     for file in files:
         twitter_data = pd.read_csv(f"Data/Tweets/{file}_twitter_data.csv")
         # openAI call
-        # twitter_data = twitter_data.dropna().reset_index()
-        # print(f"Starting ME call for {file}_twitter_data...")
-        # OpenAI_ME_responses = run_me_caller(twitter_data, "Text")
-        # twitter_data["OpenAI_ME_responses"] = OpenAI_ME_responses[0]
-        # twitter_data["OpenAI_ME_bool"] = conv_openAI_ME_data(OpenAI_ME_responses[0])
-        # twitter_data['OpenAI_data'] = OpenAI_ME_responses[1]
-        # twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)
-        # print(f"Finished ME call for {file}_twitter_data")
+        twitter_data = twitter_data.dropna().reset_index()
+        print(f"Starting ME call for {file}_twitter_data...")
+        OpenAI_ME_responses = run_me_caller(twitter_data, "Text")
+        twitter_data["OpenAI_ME_responses"] = OpenAI_ME_responses[0]
+        twitter_data["OpenAI_ME_bool"] = conv_openAI_ME_data(OpenAI_ME_responses[0])
+        twitter_data['OpenAI_data'] = OpenAI_ME_responses[1]
+        twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)
+        print(f"Finished ME call for {file}_twitter_data")
         
-        # # Octo AI call
-        # start = time.time()
-        # OctoAI_responses = run_OctoAI_ME(twitter_data['Text'].tolist())
-        # twitter_data["OctoAI_ME_responses"] = OctoAI_responses[0]
-        # twitter_data["OctoAI_ME_bool"] = OctoAI_responses[1]
-        # twitter_data['OctoAI_data'] = OctoAI_responses[2]
-        # print("Elapsed time:", time.time() - start)
-        # twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)
+        # Octo AI call
+        start = time.time()
+        OctoAI_responses = run_OctoAI_ME(twitter_data['Text'].tolist())
+        twitter_data["OctoAI_ME_responses"] = OctoAI_responses[0]
+        twitter_data["OctoAI_ME_bool"] = OctoAI_responses[1]
+        twitter_data['OctoAI_data'] = OctoAI_responses[2]
+        print("Elapsed time:", time.time() - start)
+        twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)
         
-        # # perspective AI call
-        # start = time.time()
-        # perspective_responses = run_Perspective_ME(twitter_data['Text'].tolist())
-        # twitter_data["perspective_ME_responses"] = perspective_responses[0]
-        # twitter_data['Perspective_data'] = perspective_responses[1]
-        # print("Elapsed time:", time.time() - start)
-        # twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)    
+        # perspective AI call
+        start = time.time()
+        perspective_responses = run_Perspective_ME(twitter_data['Text'].tolist())
+        twitter_data["perspective_ME_responses"] = perspective_responses[0]
+        twitter_data['Perspective_data'] = perspective_responses[1]
+        print("Elapsed time:", time.time() - start)
+        twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)    
 
         # Google ME call
-        # start = time.time()
-        # Google_responses = run_google_ME(twitter_data['Text'].tolist())
-        # twitter_data["Google_ME_responses"] = Google_responses[0]
-        # twitter_data['Google_data'] = Google_responses[1]
-        # print("Elapsed time:", time.time() - start)
-        # twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)    
+        start = time.time()
+        Google_responses = run_google_ME(twitter_data['Text'].tolist())
+        twitter_data["Google_ME_responses"] = Google_responses[0]
+        twitter_data['Google_data'] = Google_responses[1]
+        print("Elapsed time:", time.time() - start)
+        twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)    
         
         # Anthropic ME call
-        # start = time.time()
-        # Anthropic_responses = run_anthropic_ME(twitter_data['Text'].tolist())
-        # twitter_data["Anthropic_ME_responses"] = Anthropic_responses[0]
-        # twitter_data["Anthropic_ME_bool"] = Anthropic_responses[1]
-        # twitter_data['Anthropic_data'] = Anthropic_responses[2]
-        # print("Elapsed time:", time.time() - start)
-        # twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)
-        
+        start = time.time()
+        Anthropic_responses = run_anthropic_ME(twitter_data['Text'].tolist())
+        twitter_data["Anthropic_ME_responses"] = Anthropic_responses[0]
+        twitter_data["Anthropic_ME_bool"] = Anthropic_responses[1]
+        twitter_data['Anthropic_data'] = Anthropic_responses[2]
+        print("Elapsed time:", time.time() - start)
+        twitter_data.to_csv(f"Data/Tweets/{file}_twitter_data_with_ME.csv", index=False)
         
 
 def make_data():
@@ -128,41 +127,41 @@ def make_data():
         df.to_csv(f"Data/Tweets/{folder}_twitter_data.csv", index=False)
 
 
-def main():
-    # make_data()
+def run_tweets_audit():
+    make_data()
+    add_identity_tags()
     get_ME_responses()
-    # add_identity_tags()
     
-    # ME_score_analysis(identity_type="big", data_type="Tweets", file="hate_twitter_data_with_ME.csv", ME="Google", ex="hate_")
-    # ME_score_analysis(identity_type="small", data_type="Tweets", file="hate_twitter_data_with_ME.csv", ME="Google", ex="hate_")
-    # ME_score_analysis(identity_type="small", data_type="Tweets", file="hate_twitter_data_with_ME.csv", ME="PerspectiveAI", ex="hate_")
-    # ME_score_analysis(identity_type="big", data_type="Tweets", file="hate_twitter_data_with_ME.csv", ME="PerspectiveAI", ex="hate_")
+    ME_score_analysis(identity_type="big", data_type="Tweets", file="hate_twitter_data_with_ME.csv", ME="Google", ex="hate_")
+    ME_score_analysis(identity_type="small", data_type="Tweets", file="hate_twitter_data_with_ME.csv", ME="Google", ex="hate_")
+    ME_score_analysis(identity_type="small", data_type="Tweets", file="hate_twitter_data_with_ME.csv", ME="PerspectiveAI", ex="hate_")
+    ME_score_analysis(identity_type="big", data_type="Tweets", file="hate_twitter_data_with_ME.csv", ME="PerspectiveAI", ex="hate_")
     
-    # ME_score_analysis(identity_type="big", data_type="Tweets", file="offensive_twitter_data_with_ME.csv", ME="Google", ex="offensive_")
-    # ME_score_analysis(identity_type="small", data_type="Tweets", file="offensive_twitter_data_with_ME.csv", ME="Google", ex="offensive_")
-    # ME_score_analysis(identity_type="small", data_type="Tweets", file="offensive_twitter_data_with_ME.csv", ME="PerspectiveAI", ex="offensive_")
-    # ME_score_analysis(identity_type="big", data_type="Tweets", file="offensive_twitter_data_with_ME.csv", ME="PerspectiveAI", ex="offensive_")
+    ME_score_analysis(identity_type="big", data_type="Tweets", file="offensive_twitter_data_with_ME.csv", ME="Google", ex="offensive_")
+    ME_score_analysis(identity_type="small", data_type="Tweets", file="offensive_twitter_data_with_ME.csv", ME="Google", ex="offensive_")
+    ME_score_analysis(identity_type="small", data_type="Tweets", file="offensive_twitter_data_with_ME.csv", ME="PerspectiveAI", ex="offensive_")
+    ME_score_analysis(identity_type="big", data_type="Tweets", file="offensive_twitter_data_with_ME.csv", ME="PerspectiveAI", ex="offensive_")
     
-    # openAI_analysis(identity_type="Big_identity", data_type="Tweets",
-    #                 file="hate_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="hate")
-    # openAI_analysis(identity_type="Sub_Identities", data_type="Tweets",
-    #                 file="hate_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="hate")
+    openAI_analysis(identity_type="Big_identity", data_type="Tweets",
+                    file="hate_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="hate")
+    openAI_analysis(identity_type="Sub_Identities", data_type="Tweets",
+                    file="hate_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="hate")
     
-    # openAI_analysis(identity_type="Big_identity", data_type="Tweets",
-    #                 file="offensive_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="offensive")
-    # openAI_analysis(identity_type="Sub_Identities", data_type="Tweets",
-    #                 file="offensive_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="offensive")
+    openAI_analysis(identity_type="Big_identity", data_type="Tweets",
+                    file="offensive_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="offensive")
+    openAI_analysis(identity_type="Sub_Identities", data_type="Tweets",
+                    file="offensive_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="offensive")
     
-    # openAI_analysis(identity_type="Big_identity", data_type="Tweets",
-    #                 file="hate_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="hate", ME="OctoAI")
-    # openAI_analysis(identity_type="Sub_Identities", data_type="Tweets",
-    #                 file="hate_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="hate", ME="OctoAI")
+    openAI_analysis(identity_type="Big_identity", data_type="Tweets",
+                    file="hate_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="hate", ME="OctoAI")
+    openAI_analysis(identity_type="Sub_Identities", data_type="Tweets",
+                    file="hate_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="hate", ME="OctoAI")
     
-    # openAI_analysis(identity_type="Big_identity", data_type="Tweets",
-    #                 file="offensive_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="offensive", ME="OctoAI")
-    # openAI_analysis(identity_type="Sub_Identities", data_type="Tweets",
-    #                 file="offensive_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="offensive", ME="OctoAI")
-    pass
+    openAI_analysis(identity_type="Big_identity", data_type="Tweets",
+                    file="offensive_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="offensive", ME="OctoAI")
+    openAI_analysis(identity_type="Sub_Identities", data_type="Tweets",
+                    file="offensive_twitter_data_with_ME.csv", toxic_col="Toxicity", ex="offensive", ME="OctoAI")
+        
         
 if __name__ == "__main__":
-    main()
+    run_tweets_audit()

@@ -14,94 +14,93 @@ def main() -> None:
     data = pd.read_csv("./Data/Movies/TMDB_with_genre.csv")
     our_movie_list = [data['Title'].tolist(), data["Release year"].tolist()]
     
+    tag_straight(our_movie_list[0], our_movie_list[1])
     
-    # tag_straight(our_movie_list[0], our_movie_list[1])
+    make_tags_general(our_movie_list=our_movie_list,
+                        category_title="Sexuality",
+                        identity_title="LGBT-related",
+                        identities=["Gay", "Lesbian", "LGBT", "Bisexual", "Trans-Nonbinary", "Bisexual", "Trans-Nonbinary"], 
+                        category_titles=["Category:Gay-related films",
+                                        "Category:Lesbian-related films",
+                                        "Category:LGBT-related films",
+                                        "Category:Bisexuality-related films",
+                                        "Category:Transgender-related films",
+                                        "Category:Male bisexuality in film",
+                                        "Category:Films about trans men"
+                                        ],
+                        page_title_dict={"Lesbian": "List of feature films with lesbian characters",
+                                        "Trans-Nonbinary": "List of feature films with transgender characters"},
+                        depths=[4, 4, 4, 4, 3, 1, 1]
+    )
     
-    # make_tags_general(our_movie_list=our_movie_list,
-    #                     category_title="Sexuality",
-    #                     identity_title="LGBT-related",
-    #                     identities=["Gay", "Lesbian", "LGBT", "Bisexual", "Trans-Nonbinary", "Bisexual", "Trans-Nonbinary"], 
-    #                     category_titles=["Category:Gay-related films",
-    #                                     "Category:Lesbian-related films",
-    #                                     "Category:LGBT-related films",
-    #                                     "Category:Bisexuality-related films",
-    #                                     "Category:Transgender-related films",
-    #                                     "Category:Male bisexuality in film",
-    #                                     "Category:Films about trans men"
-    #                                     ],
-    #                     page_title_dict={"Lesbian": "List of feature films with lesbian characters",
-    #                                     "Trans-Nonbinary": "List of feature films with transgender characters"},
-    #                     depths=[4, 4, 4, 4, 3, 1, 1]
-    # )
+    make_tags_general(our_movie_list,
+                    category_title="Gender",
+                    identity_title="Men",
+                    identities=["Men", "Men", "Men", "Men"],
+                    category_titles=["Category:Films about brothers", "Category:Films about kings",
+                                     "Category:Films about father–child relationships", "Category:Films about princes"]
+    )
     
-    # make_tags_general(our_movie_list,
-    #                 category_title="Gender",
-    #                 identity_title="Men",
-    #                 identities=["Men", "Men", "Men", "Men"],
-    #                 category_titles=["Category:Films about brothers", "Category:Films about kings",
-    #                                  "Category:Films about father–child relationships", "Category:Films about princes"]
-    # )
-    
-    # make_tags_general(our_movie_list,
-    #                   category_title="Religion",
-    #                   identity_title="Christian",
-    #                   identities=["Christian"],
-    #                   category_titles=["Category:Films about Christianity"],
-    #                   page_title_dict={"Christian": "List of Christian films"},
-    #                   depths=[2]
-    # )
-    # make_tags_general(our_movie_list,
-    #                 category_title="Religion",
-    #                 identity_title="Non-Christian",
-    #                 identities=["Islam", "Jewish",
-    #                             "Other-Non-Christian", "Other-Non-Christian", "Other-Non-Christian",
-    #                             "Other-Non-Christian", "Other-Non-Christian", "Other-Non-Christian",
-    #                             "Other-Non-Christian", "Other-Non-Christian", "Other-Non-Christian",
-    #                             "Other-Non-Christian"],
-    #                 category_titles=["Category:Films about Islam","Category:Films about Jews and Judaism",
-    #                                 "Category:Films about Buddhism", "Category:Films about new religious movements",
-    #                                 "Category:Films about Buddhism", "Category:Films about Islam", "Category:Films about Sikhism",
-    #                                 "Category:Films about Jews and Judaism", "Category:Films about Satanism",
-    #                                 "Category:Films about Spiritism", "Category:Films about Voodoo", "Category:Films about Zoroastrianism"],
-    #                 depths=[3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4 ,4]
-    # )
+    make_tags_general(our_movie_list,
+                      category_title="Religion",
+                      identity_title="Christian",
+                      identities=["Christian"],
+                      category_titles=["Category:Films about Christianity"],
+                      page_title_dict={"Christian": "List of Christian films"},
+                      depths=[2]
+    )
+    make_tags_general(our_movie_list,
+                    category_title="Religion",
+                    identity_title="Non-Christian",
+                    identities=["Islam", "Jewish",
+                                "Other-Non-Christian", "Other-Non-Christian", "Other-Non-Christian",
+                                "Other-Non-Christian", "Other-Non-Christian", "Other-Non-Christian",
+                                "Other-Non-Christian", "Other-Non-Christian", "Other-Non-Christian",
+                                "Other-Non-Christian"],
+                    category_titles=["Category:Films about Islam","Category:Films about Jews and Judaism",
+                                    "Category:Films about Buddhism", "Category:Films about new religious movements",
+                                    "Category:Films about Buddhism", "Category:Films about Islam", "Category:Films about Sikhism",
+                                    "Category:Films about Jews and Judaism", "Category:Films about Satanism",
+                                    "Category:Films about Spiritism", "Category:Films about Voodoo", "Category:Films about Zoroastrianism"],
+                    depths=[3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4 ,4]
+    )
 
-    # make_tags_general(our_movie_list,
-    #                   category_title="Race-Ethnicity",
-    #                   identity_title="Non-White",
-    #                   identities=["Black", "Asian", "Native-Americans", "Latinx",
-    #                               "Latinx", "Latinx", "Asian", "Asian",
-    #                               "Middle-Eastern-North-African", "Middle-Eastern-North-African",
-    #                               "Native-Americans", "Native-Americans", "Native-Americans", 
-    #                               "Native-Americans", "Native-Americans"],
-    #                   category_titles=["Category:African-American_films",
-    #                                    "Category:Films about Asian Americans",
-    #                                    "Category:Films about Native Americans",
-    #                                    "Category:Films about Mexican Americans",
-    #                                    "Category:Hispanic and Latino American films",
-    #                                    "Category:Mexican films",
-    #                                    "Category:Chinese films","Category:Asian films",
-    #                                    "Category:Middle East in fiction",
-    #                                    "Category:Films set in the Middle East",
-    #                                    "Category:Native American cinema","Category:Inuit films", 
-    #                                    "Category:Animated films about Native Americans", 
-    #                                    "Category:Films set in the Inca Empire", 
-    #                                    "Category:Films set in the Aztec Triple Alliance"],
-    #                   page_title_dict={"Latinx": "List of Chicano films", "Native-Americans": "List of Indigenous Canadian films"}
-    # )
+    make_tags_general(our_movie_list,
+                      category_title="Race-Ethnicity",
+                      identity_title="Non-White",
+                      identities=["Black", "Asian", "Native-Americans", "Latinx",
+                                  "Latinx", "Latinx", "Asian", "Asian",
+                                  "Middle-Eastern-North-African", "Middle-Eastern-North-African",
+                                  "Native-Americans", "Native-Americans", "Native-Americans", 
+                                  "Native-Americans", "Native-Americans"],
+                      category_titles=["Category:African-American_films",
+                                       "Category:Films about Asian Americans",
+                                       "Category:Films about Native Americans",
+                                       "Category:Films about Mexican Americans",
+                                       "Category:Hispanic and Latino American films",
+                                       "Category:Mexican films",
+                                       "Category:Chinese films","Category:Asian films",
+                                       "Category:Middle East in fiction",
+                                       "Category:Films set in the Middle East",
+                                       "Category:Native American cinema","Category:Inuit films", 
+                                       "Category:Animated films about Native Americans", 
+                                       "Category:Films set in the Inca Empire", 
+                                       "Category:Films set in the Aztec Triple Alliance"],
+                      page_title_dict={"Latinx": "List of Chicano films", "Native-Americans": "List of Indigenous Canadian films"}
+    )
 
-    # make_tags_general(our_movie_list,
-    #                     category_title="Disability",
-    #                     identity_title="Disability",
-    #                     identities=["Physical-Disability", "Physical-Disability", "Physical-Disability",
-    #                                 "Physical-Disability", "Physical-Disability", "Physical-Disability","Physical-Disability", 
-    #                                 "Mental-Disability", "Mental-Disability", "Mental-Disability", "Mental-Disability"],
-    #                     category_titles=["Category:Films about parasports", "Category:Films about amputees", 
-    #                                     "Category:Films about blind people", "Category:Films about people with cerebral palsy",
-    #                                     "Category:Films about deaf people", "Category:Films about people with paraplegia or tetraplegia",
-    #                                     "Category:Films about people with dwarfism", "Category:Films about autism", "Category:Films about intellectual disability",
-    #                                     "Category:Films about mental disorders", "Category:Films about mental health"]
-    # )
+    make_tags_general(our_movie_list,
+                        category_title="Disability",
+                        identity_title="Disability",
+                        identities=["Physical-Disability", "Physical-Disability", "Physical-Disability",
+                                    "Physical-Disability", "Physical-Disability", "Physical-Disability","Physical-Disability", 
+                                    "Mental-Disability", "Mental-Disability", "Mental-Disability", "Mental-Disability"],
+                        category_titles=["Category:Films about parasports", "Category:Films about amputees", 
+                                        "Category:Films about blind people", "Category:Films about people with cerebral palsy",
+                                        "Category:Films about deaf people", "Category:Films about people with paraplegia or tetraplegia",
+                                        "Category:Films about people with dwarfism", "Category:Films about autism", "Category:Films about intellectual disability",
+                                        "Category:Films about mental disorders", "Category:Films about mental health"]
+    )
 
     white_tagged(our_list=our_movie_list[0], year_list=our_movie_list[1])
 
@@ -480,10 +479,14 @@ def addlabels(x,y):
     for i in range(len(x)):
         plt.text(i, y[i], y[i], ha = 'center', fontsize=14)
 
+
+def run_audit():
+    main()
+    bechdeltest()
+    more_mens_movies()
+    add_identity_tags()
+    read_me_table()
+    
+
 if __name__ == "__main__":
-    # main()
-    # bechdeltest()
-    # add_identity_tags()
-    # read_me_table()
-    # more_mens_movies()
-    pass
+    run_audit()
