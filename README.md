@@ -51,7 +51,7 @@
 ### Jigsaw Kaggle
 
 Jigsaw Unintended Bias in Toxicity Classification data with a total of 445,293 unique identity tagged elements. We excluded rows with no identity tags. Rows without values in any of these columns -- male, female, transgender, other_gender, heterosexual, homosexual_gay_or_lesbian, bisexual, other_sexual_orientation, christian, jewish, muslim, hindu, buddhist, atheist, other_religion, black, white, asian, latino, other_race_or_ethnicity, physical_disability, intellectual_or_learning_disability, psychiatric_or_mental_illness, other_disability. Further information about data collection, anonymization, and preparation is discussed in [the kaggle page](https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification/overview).
-Compiled data too large to be on github, get from drive.
+(Compiled data too large to be on github.)
 
 ### Jigsaw Bias
 
