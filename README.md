@@ -56,28 +56,27 @@ Compiled data too large to be on github, get from drive.
 ### Jigsaw Bias
 
 Data from Nuanced Metrics for Measuring Unintended Bias with Real Data for Text Classification paper. This subset of the dataset we used contains 60,560 rows. We extrated rows with phrases containing the identities we focussed on in our research. Further information about data collection, anonymization, and preparation is discussed in [the associated paper](https://dl.acm.org/doi/pdf/10.1145/3278721.3278729).
-Compiled data too large to be on github, get from drive.
 
 ### Stormfront
 
 Data (10,944 entries) from the Hate speech dataset from a white supremacist forum. Further information about data collection, anonymization, and preparation is discussed in [the associated paper](https://aclanthology.org/W18-51.pdf).
-Compiled data at [path](Data/Stormfront/stormfront_data_ME.csv).
+Compiled data at [Data/Stormfront/stormfront_data_ME.csv](Data/Stormfront/stormfront_data_ME.csv).
 
 ### TweetEval
 
 We used the hate (12,962) and offensive (14,100) subset of the data from the Unified Benchmark and Comparative Evaluation for Tweet Classification paper. Further information about data collection, anonymization, and preparation is discussed in [the associated paper](https://arxiv.org/pdf/2010.12421).
-Compiled data for offensive subset at [path](Data/Tweets/offensive_twitter_data_with_ME.csv),
-Compiled data for hate subset at [path](Data/Tweets/hate_twitter_data_with_ME.csv).
+Compiled data for offensive subset at [Data/Tweets/offensive_twitter_data_with_ME.csv](Data/Tweets/offensive_twitter_data_with_ME.csv),
+Compiled data for hate subset at [Data/Tweets/hate_twitter_data_with_ME.csv](Data/Tweets/hate_twitter_data_with_ME.csv).
 
 ### OpenAI
 
 Complete data (1,680 entries) from the 'A Holistic Approach to Undesired Content Detection in the Real World' paper. Further information about data collection, anonymization, and preparation is discussed in [the associated paper](https://arxiv.org/abs/2208.03274).
-Compiled data at [path](Data/Markov/data_with_ME.csv).
+Compiled data at [Data/Markov/data_with_ME.csv](Data/Markov/data_with_ME.csv).
 
 ### Movies
 
 Dataset made for this research.
-Compiled data at [path](Data/Movies/TMDB_with_ME.csv).
+Compiled data at [Data/Movies/TMDB_with_ME.csv](Data/Movies/TMDB_with_ME.csv).
 
 ### TV Synopsis
 
