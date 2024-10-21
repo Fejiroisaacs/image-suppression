@@ -85,6 +85,10 @@ Compiled lomg IMDB data at Data/TV Shows/long_IMDB_with_ME.csv,
 Compiled medium wiki data at Data/TV Shows/mid_wiki_with_ME.csv,
 Compiled short tmdb data at Data/TV Shows/short_TMDB_with_ME.csv.
 
-## FILESTRUCTURE
+### FILESTRUCTURE
 
 Dataset (compressed): `speech_suppression_database.7z`
+
+### Running Audit
+
+Run in terminal: `python3 code/run_full_audit.py`

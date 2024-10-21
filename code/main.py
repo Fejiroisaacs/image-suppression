@@ -1251,7 +1251,6 @@ def main():
     # identity_ifprs('Data/Combined/traditional_combined.csv', label_cols=['true_label'], dataset_name='Traditional', score_types=['True label'], other_table=True)
 
 
-    # add_metrics(identity_imeans)
     # add_metrics(identity_ifprs)
     # add_metrics(identity_imedians)
     
