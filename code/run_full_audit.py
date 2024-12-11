@@ -60,5 +60,15 @@ def analysis():
     make_lw_data()
     
 if __name__ == "__main__":
-    run_full_audit()
+    """Run these one at a time"""
+    # run_full_audit()
+    
+    """
+    In order to run this:
+    go to `code/Movies/get_movie_data.py,`
+    comment out this import line 'from movie_tagger import run_audit as more_data_prep'
+    then
+    go to `code/TV_Shows/tv.py,`
+    comment out this import line 'from get_tv_data import data_prep'
+    """
     analysis()
