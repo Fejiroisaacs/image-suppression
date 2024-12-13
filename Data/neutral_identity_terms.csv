@@ -1,6 +1,6 @@
 Identity category,Sub_identity,Terms
-men,male,"['men', 'male', 'boy', 'son', 'bro', 'man', 'father', 'dad', 'uncle', 'daddy', 'papa', 'husband', 'king', 'boyfriend', 'gentleman', 'guy', 'he', 'his', 'him', 'sir', 'mister', 'nephew', 'grandfather', 'grandson', 'brother', 'male cousin', 'stepfather', 'stepson', 'stepbrother']"
-women,female,"['women', 'female', 'girl', 'daughter', 'sis', 'woman', 'mom', 'mother', 'aunt', 'aunty', 'mum', 'mom', 'mummy', 'mommy', 'mama', 'wife', 'queen', 'girlfriend', 'chic', 'lady', 'gal', 'she', 'her', 'madam', 'feminism', 'feminist', 'niece', 'grandmother', 'granddaughter', 'sister', 'stepmother', 'stepdaughter', 'stepsister']"
+men,male,"['men', 'male', 'boy', 'son', 'man', 'father', 'dad', 'uncle', 'daddy', 'papa', 'husband', 'king', 'boyfriend', 'gentleman', 'guy', 'sir', 'mister', 'nephew', 'grandfather', 'grandson', 'brother', 'male cousin', 'stepfather', 'stepson', 'stepbrother']"
+women,female,"['women', 'female', 'girl', 'daughter', 'woman', 'mom', 'mother', 'aunt', 'aunty', 'mum', 'mom', 'mummy', 'mommy', 'mama', 'wife', 'queen', 'girlfriend', 'chic', 'lady', 'gal', 'madam', 'feminism', 'feminist', 'niece', 'grandmother', 'granddaughter', 'sister', 'stepmother', 'stepdaughter', 'stepsister']"
 Non-White,middle eastern,"['middle eastern', 'arab', 'Egyptian', 'Iranian', 'Egypt', 'Iraqi', 'Jordanian', 'Kuwaiti', 'Lebanese', 'Omani', 'Palestinian', 'Qatari', 'Saudi', 'Emirati', 'Yemeni']"
 Non-Christian,muslim,"['muslim', 'sunni', 'mosque', 'islam', 'eid', 'islamic', 'Hanafi', 'Hanbali', 'Maliki', 'Zahiri', 'duaa', 'ramadan', 'imam', 'sheikh', 'hajj', 'Nikkah', 'Shia', 'quran']"
 Non-Christian,jewish,"['jewish', 'jew', 'judaic', 'chueta', 'yiddish', 'synagogue', 'rabbi', 'torah', 'hanukkah', 'kabbalah']"
